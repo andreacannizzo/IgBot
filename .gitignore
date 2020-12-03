@@ -8,6 +8,8 @@
 #aggiunti da me:
 .idea
 venv
+Selenium
+.DS_Store
 
 # User-specific stuff
 .idea/**/workspace.xml
