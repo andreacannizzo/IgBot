@@ -9,7 +9,7 @@ password_str = 'Lubitelpass1992!'
 # username_str = 'bluinfinitobeb'
 # password_str = 'Instagram1987'
 hash_str = '#lubitel166'
-no_cycle = 100
+no_cycle = 50
 
 browser = lunch_browser(False, web_site)
 cookies_accept(browser)
