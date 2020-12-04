@@ -9,7 +9,7 @@ from inputs import *
 from definitions import *
 
 
-browser = lunch_browser(False)
+browser = lunch_browser(path_to_chromedriver, False)
 cookies_accept(browser)
 login(browser, username_str, password_str)
 avoid_popups(browser)

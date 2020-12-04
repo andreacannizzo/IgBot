@@ -5,10 +5,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
 import random
-from inputs import *
 
 
-def lunch_browser(images=True):
+def lunch_browser(path_to_chromedriver, images=True):
     if not images:
         chrome_options = webdriver.ChromeOptions()
         prefs = {"profile.managed_default_content_settings.images": 2}
@@ -26,14 +25,14 @@ def cookies_accept(browser):
     browser.find_element_by_xpath("//button[text()='Accetta']").click()
 
 
-def login(browser, username_str_, password_str_):
+def login(browser, username_str, password_str):
     # inserisci username e password nei relativi slot
     username = browser.find_element_by_name('username')
     username.clear()
-    username.send_keys(username_str_)
+    username.send_keys(username_str)
     password = browser.find_element_by_name('password')
     password.clear()
-    password.send_keys(password_str_)
+    password.send_keys(password_str)
     # batti invio di conferma
     submit = browser.find_element_by_tag_name('form')
     submit.submit()
