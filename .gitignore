@@ -9,6 +9,7 @@
 .idea
 venv
 Selenium
+WorkingFiles
 .DS_Store
 inputs.py
 

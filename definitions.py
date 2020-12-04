@@ -5,18 +5,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
 import random
+from inputs import *
 
 
-def lunch_browser(images=True, web_site='https://www.instagram.com/'):
+def lunch_browser(images=True):
     if not images:
         chrome_options = webdriver.ChromeOptions()
         prefs = {"profile.managed_default_content_settings.images": 2}
         chrome_options.add_experimental_option("prefs", prefs)
-        browser = webdriver.Chrome('/Users/andreacannizzo/Downloads/chromedriver', chrome_options=chrome_options)
-        browser.get(web_site)
+        browser = webdriver.Chrome(path_to_chromedriver, chrome_options=chrome_options)
+        browser.get('https://www.instagram.com/')
     else:
-        browser = webdriver.Chrome('/Users/andreacannizzo/Downloads/chromedriver')
-        browser.get(web_site)
+        browser = webdriver.Chrome(path_to_chromedriver)
+        browser.get('https://www.instagram.com/')
     return browser
 
 
@@ -25,14 +26,14 @@ def cookies_accept(browser):
     browser.find_element_by_xpath("//button[text()='Accetta']").click()
 
 
-def login(browser, username_str='lubitelcommunity', password_str='Lubitelpass1992!'):
+def login(browser, username_str_, password_str_):
     # inserisci username e password nei relativi slot
     username = browser.find_element_by_name('username')
     username.clear()
-    username.send_keys(username_str)
+    username.send_keys(username_str_)
     password = browser.find_element_by_name('password')
     password.clear()
-    password.send_keys(password_str)
+    password.send_keys(password_str_)
     # batti invio di conferma
     submit = browser.find_element_by_tag_name('form')
     submit.submit()
@@ -46,14 +47,14 @@ def avoid_popups(browser):
     browser.find_element_by_xpath("//button[text()='Non ora']").click()
 
 
-def search_hashtag(browser, hash_str='#lubitel'):
+def search_hashtag(browser, hash_str_='#lubitel'):
     # cerca barra ricerca, inserisci hashtag desiderato e batti due volte invio
     searchbox = WebDriverWait(browser, 10).until(
         EC.visibility_of_element_located(
             (By.XPATH, "//input[@placeholder='Cerca']")
         )
     )
-    searchbox.send_keys(hash_str)
+    searchbox.send_keys(hash_str_)
     time.sleep(2)
     searchbox.send_keys(Keys.ENTER)
     time.sleep(1)

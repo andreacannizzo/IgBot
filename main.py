@@ -1,5 +1,4 @@
 from selenium.common.exceptions import TimeoutException
-from definitions import *
 # private variables and information are stored in inputs file
 #       web_site = 'string'
 #       username_str = 'string'
@@ -7,9 +6,10 @@ from definitions import *
 #       hash_str = '#string'
 #       no_cycle = number
 from inputs import *
+from definitions import *
 
 
-browser = lunch_browser(False, web_site)
+browser = lunch_browser(False)
 cookies_accept(browser)
 login(browser, username_str, password_str)
 avoid_popups(browser)
