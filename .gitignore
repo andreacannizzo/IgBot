@@ -12,6 +12,7 @@ Selenium
 WorkingFiles
 .DS_Store
 inputs.py
+__pycache__/
 
 # User-specific stuff
 .idea/**/workspace.xml
