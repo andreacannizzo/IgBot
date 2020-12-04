@@ -16,4 +16,4 @@ A simple bot to like posts and gain followers on Instagram
    https://chrome.google.com/webstore/detail/block-image/pehaalcefcjfccdpbckoablngfkfgfgj
    ```
    download and install the extension.
-3. change the inputs.py file according to your preference
+3. create an inputs.py file in the root directory as specified in main.py
