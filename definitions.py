@@ -60,11 +60,18 @@ def search_hashtag(browser, hash_str_='#lubitel'):
     searchbox.send_keys(Keys.ENTER)
 
 
+def scroll_down(browser):
+    browser.execute_script("window.scrollTo(0, 1000)")
+
+
 def click_first_pic(browser):
-    # cerca prima immagine della pagina e cliccala
+    # first of 'popular posts'
+    #       //*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]
+    # first of 'recent posts'
+    #       //*[@id='react-root']/section/main/article/div[2]/div/div[1]/div[1]
     first_image = WebDriverWait(browser, 10).until(
         EC.visibility_of_element_located(
-            (By.XPATH, "//*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]")
+            (By.XPATH, "//*[@id='react-root']/section/main/article/div[2]/div/div[1]/div[1]")
         )
     )
     time.sleep(5)

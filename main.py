@@ -14,6 +14,8 @@ cookies_accept(browser)
 login(browser, username_str, password_str)
 avoid_popups(browser)
 search_hashtag(browser, hash_str)
+time.sleep(5)
+scroll_down(browser)
 click_first_pic(browser)
 
 # crea variabili che contano il numero di post likati, quelli skipped e il numero di tentativi di refresh max
