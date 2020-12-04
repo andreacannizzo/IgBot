@@ -1,15 +1,13 @@
 from selenium.common.exceptions import TimeoutException
 from definitions import *
+# private variables and information are stored in inputs file
+#       web_site = 'string'
+#       username_str = 'string'
+#       password_str = 'string'
+#       hash_str = '#string'
+#       no_cycle = number
+from inputs import *
 
-web_site = 'https://www.instagram.com/'
-username_str = 'lubitelcommunity'
-password_str = 'Lubitelpass1992!'
-# username_str = '101izzo'
-# password_str = 'Instagrampass1992'
-# username_str = 'bluinfinitobeb'
-# password_str = 'Instagram1987'
-hash_str = '#lubitel166'
-no_cycle = 50
 
 browser = lunch_browser(False, web_site)
 cookies_accept(browser)

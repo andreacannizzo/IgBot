@@ -10,6 +10,7 @@
 venv
 Selenium
 .DS_Store
+inputs.py
 
 # User-specific stuff
 .idea/**/workspace.xml
