@@ -1,10 +1,10 @@
 from selenium.common.exceptions import TimeoutException
-# private variables and information are stored in inputs file
+# private variables and information are stored in inputs.py file
 #       web_site = 'string'
 #       username_str = 'string'
 #       password_str = 'string'
 #       hash_str = '#string'
-#       no_cycle = number
+#       like2put = number
 from inputs import *
 from definitions import *
 
@@ -18,47 +18,38 @@ time.sleep(5)
 scroll_down(browser)
 click_first_pic(browser)
 
-# crea variabili che contano il numero di post likati, quelli skipped e il numero di tentativi di refresh max
-no_liked = 0
-no_posts_seen = 0
-max_tentativi = 0
+# create variables that counts liked posts, skipped ones and max number of tryings
+liked = 0
+total = 0
+tryings = 0
+max_tryings = 3
 
-# esegui una volta l'argomento del ciclo for perche' cambia l'xpath del bottone next
-try:
-    no_liked += like_if_its_ok(browser, no_liked)
-    next_post = browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a")
-    next_post.click()
-except TimeoutException:  # Exception:
-    print('non sono riuscito a caricare nemmeno la prima immagine')
-    browser.close()
-    exit()
-no_posts_seen += 1
 
-# esegui il ciclo
-while no_liked < no_cycle:
+# starting from the most recent post there is no need to change the xpath of the 'next_post' because they are all equal
+while liked < like2put:
     try:
-        no_liked += like_if_its_ok(browser, no_liked)
+        liked += like_if_its_ok(browser, liked)
         next_post = browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]")
         next_post.click()
-        no_posts_seen += 1
+        total += 1
     except TimeoutException:
-        if max_tentativi == 3:
+        if tryings == max_tryings:
             browser.close()
             exit()
         back_n_forth(browser)
-        max_tentativi += 1
+        tryings += 1
 
 # esegui l'ultimo visualizzato
-no_liked += like_if_its_ok(browser, no_liked)
-no_posts_seen += 1
+liked += like_if_its_ok(browser, liked)
+total += 1
 
 # display stat
 print('desiderati minimo:')
-print(no_cycle)
+print(like2put)
 print('ottenuti like: (ricorda che al massimo ne puo mettere due i piu dei desiderati)')
-print(no_liked)
+print(liked)
 print('post osservati:')
-print(no_posts_seen)
+print(total)
 
 # close browser and exit
 browser.close()
