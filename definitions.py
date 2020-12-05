@@ -9,12 +9,14 @@ import random
 
 def lunch_browser(path_to_chromedriver, images=True):
     if not images:
+        # create browser without images
         chrome_options = webdriver.ChromeOptions()
         prefs = {"profile.managed_default_content_settings.images": 2}
         chrome_options.add_experimental_option("prefs", prefs)
         browser = webdriver.Chrome(path_to_chromedriver, chrome_options=chrome_options)
         browser.get('https://www.instagram.com/')
     else:
+        # create browser with images
         browser = webdriver.Chrome(path_to_chromedriver)
         browser.get('https://www.instagram.com/')
     return browser
@@ -26,38 +28,34 @@ def cookies_accept(browser):
 
 
 def login(browser, username_str, password_str):
-    # inserisci username e password nei relativi slot
     username = browser.find_element_by_name('username')
     username.clear()
     username.send_keys(username_str)
     password = browser.find_element_by_name('password')
     password.clear()
     password.send_keys(password_str)
-    # batti invio di conferma
+    # confirm
     submit = browser.find_element_by_tag_name('form')
     submit.submit()
 
 
 def avoid_popups(browser):
-    # attendi pop up salvataggio credenziali e annullalo
+    # wait save credentials pop-up and click not now
     WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Non ora"]')).click()
-    # attendi pop up attivazione notifiche e annullalo
+    # wait notifications request and click not now
     browser.implicitly_wait(10)
     browser.find_element_by_xpath("//button[text()='Non ora']").click()
 
 
-def search_hashtag(browser, hash_str_='#lubitel'):
-    # cerca barra ricerca, inserisci hashtag desiderato e batti due volte invio
-    searchbox = WebDriverWait(browser, 10).until(
-        EC.visibility_of_element_located(
-            (By.XPATH, "//input[@placeholder='Cerca']")
-        )
-    )
-    searchbox.send_keys(hash_str_)
+def search_hashtag(browser, hash_str_='#photooftheday'):
+    # insert hashtag in search bar and double press enter
+    search_box_xpath = "//input[@placeholder='Cerca']"
+    search_box = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, search_box_xpath)))
+    search_box.send_keys(hash_str_)
     time.sleep(2)
-    searchbox.send_keys(Keys.ENTER)
-    time.sleep(1)
-    searchbox.send_keys(Keys.ENTER)
+    search_box.send_keys(Keys.ENTER)
+    time.sleep(2)
+    search_box.send_keys(Keys.ENTER)
 
 
 def scroll_down(browser):
@@ -65,15 +63,9 @@ def scroll_down(browser):
 
 
 def click_first_pic(browser):
-    # first of 'popular posts'
-    #       //*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]
-    # first of 'recent posts'
-    #       //*[@id='react-root']/section/main/article/div[2]/div/div[1]/div[1]
-    first_image = WebDriverWait(browser, 10).until(
-        EC.visibility_of_element_located(
-            (By.XPATH, "//*[@id='react-root']/section/main/article/div[2]/div/div[1]/div[1]")
-        )
-    )
+    first_of_populars = "//*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]"
+    first_of_recents = "//*[@id='react-root']/section/main/article/div[2]/div/div[1]/div[1]"
+    first_image = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, first_of_recents)))
     time.sleep(5)
     first_image.click()
 
@@ -83,10 +75,10 @@ def like_if_its_ok(browser, number):
     like = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, like_xpath)))
     color = like.get_property("innerHTML")
     if "#262626" in color:
-        time.sleep(random.uniform(2, 4))
+        time.sleep(random.uniform(2, 5))
         like.click()
         print(number+1)
-        time.sleep(random.uniform(2, 4))
+        time.sleep(random.uniform(2, 5))
         return 1
     else:
         time.sleep(random.uniform(3, 4))
@@ -95,9 +87,8 @@ def like_if_its_ok(browser, number):
 
 def back_n_forth(browser):
     time.sleep(10)
-    print("torno indietro")
+    print("go back")
     browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[1]").click()
     time.sleep(10)
-    print("torno avanti")
+    print("go forth")
     browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]").click()
-
