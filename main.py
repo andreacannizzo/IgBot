@@ -21,18 +21,22 @@ for hash_i in hash_str:
     scroll_down(browser)
     click_first_pic(browser)
 
-    # create variables that counts liked posts, total viewed, tryings and max number of tryings
+    # create variables that counts liked posts, total viewed, tryings, result of like function and number
+    # of total posts skipped in a row
     liked = 0
     total = 0
     tryings = 0
-    max_tryings = 3
+    result_of_LIIO = 0
+    skip = 0
 
-    # starting from the most recent post there is no need to change the xpath of the 'next_post' because they are all equal
-    while liked < target_of_likes:
+    # starting from the most recent post there is no need to change the xpath of the 'next_post' bc they are all equal
+    while (liked < target_of_likes) and (skip > max_skip):
         try:
-            liked += like_if_its_ok(browser, liked)
+            result_of_LIIO = like_if_its_ok(browser, liked)
+            liked += result_of_LIIO
             browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]").click()
             total += 1
+            skip += result_of_LIIO - 1
         except TimeoutException:
             if tryings == max_tryings:
                 print(f'image did not load after {max_tryings} attempts')
