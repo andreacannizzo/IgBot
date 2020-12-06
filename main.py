@@ -7,6 +7,8 @@ from selenium.common.exceptions import TimeoutException
 #       like2put = number
 from inputs import *
 from definitions import *
+import math
+import random
 
 
 browser = lunch_browser(path_to_chromedriver, False)
@@ -16,9 +18,11 @@ avoid_popups(browser)
 
 for hash_i in hash_str:
     print(f"searching for {hash_i} posts")
-    search_hashtag(browser, hash_i)
-    time.sleep(5)
-    scroll_down(browser)
+    number_of_posts = search_hashtag(browser, hash_i)
+    max_number_of_scroll_to_bottom = math.floor(number_of_posts/100)
+    random_scrolls = random.randint(1, max_number_of_scroll_to_bottom)
+    print(f"total number of scroll to proceed = {random_scrolls}")
+    scroll_down_function(browser, random_scrolls)
     click_first_pic(browser)
 
     # create variables that counts liked posts, total viewed, tryings, result of like function and number
