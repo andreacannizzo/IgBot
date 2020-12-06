@@ -1,10 +1,12 @@
 from selenium.common.exceptions import TimeoutException
 # private variables and information are stored in inputs.py file
-#       web_site = 'string'
-#       username_str = 'string'
-#       password_str = 'string'
-#       hash_str = '#string'
-#       like2put = number
+#           username_str = 'username'
+#           password_str = 'password'
+#           hash_str = {"#1", "#2", "#3", "#4", "#5", "#6"}
+#           target_of_likes = 100
+#           max_tryings = 3
+#           max_skip = 10
+#           path_to_chromedriver = '/path/to/chromedriver'
 from inputs import *
 from definitions import *
 import math
@@ -34,13 +36,16 @@ for hash_i in hash_str:
     skip = 0
 
     # starting from the most recent post there is no need to change the xpath of the 'next_post' bc they are all equal
-    while (liked < target_of_likes) and (skip > max_skip):
+    while (liked < target_of_likes) and (skip < max_skip):
         try:
             result_of_LIIO = like_if_its_ok(browser, liked)
             liked += result_of_LIIO
             browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]").click()
             total += 1
-            skip += result_of_LIIO - 1
+            if result_of_LIIO == 1:
+                skip = 0
+            else:
+                skip += 1
         except TimeoutException:
             if tryings == max_tryings:
                 print(f'image did not load after {max_tryings} attempts')
