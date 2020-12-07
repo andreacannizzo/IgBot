@@ -90,20 +90,24 @@ def click_first_pic(browser):
     first_of_recents_5 = "//*[@id='react-root']/section/main/article/div[2]/div/div[5]/div[1]"
     try:
         first_image = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, first_of_recents_1)))
+        time.sleep(5)
+        first_image.click()
     except Exception:
         print('1st row element not found, I try with other')
         try:
             first_image = WebDriverWait(browser, 10).until(
                 EC.visibility_of_element_located((By.XPATH, first_of_recents_3)))
+            time.sleep(5)
+            first_image.click()
         except Exception:
             print('3rd row element not found, I try with other')
             try:
                 first_image = WebDriverWait(browser, 10).until(
                     EC.visibility_of_element_located((By.XPATH, first_of_recents_5)))
+                time.sleep(5)
+                first_image.click()
             except Exception:
                 print('5rd row element not found, I stop here')
-    time.sleep(5)
-    first_image.click()
 
 
 def like_if_its_ok(browser, number):
