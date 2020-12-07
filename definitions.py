@@ -126,9 +126,9 @@ def like_if_its_ok(browser, number):
 
 
 def back_n_forth(browser):
-    time.sleep(10)
-    print("go back")
-    browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[1]").click()
+    # time.sleep(10)
+    # print("go back")
+    # browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[1]").click()
     time.sleep(10)
     print("go forth")
     browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]").click()
