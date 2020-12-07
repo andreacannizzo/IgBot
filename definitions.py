@@ -85,8 +85,23 @@ def scroll_down_function(browser, nr_of_scroll):
 
 def click_first_pic(browser):
     first_of_populars = "//*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]"
-    first_of_recents = "//*[@id='react-root']/section/main/article/div[2]/div/div[1]/div[1]"
-    first_image = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, first_of_recents)))
+    first_of_recents_1 = "//*[@id='react-root']/section/main/article/div[2]/div/div[1]/div[1]"
+    first_of_recents_3 = "//*[@id='react-root']/section/main/article/div[2]/div/div[3]/div[1]"
+    first_of_recents_5 = "//*[@id='react-root']/section/main/article/div[2]/div/div[5]/div[1]"
+    try:
+        first_image = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, first_of_recents_1)))
+    except Exception:
+        print('1st row element not found, I try with other')
+        try:
+            first_image = WebDriverWait(browser, 10).until(
+                EC.visibility_of_element_located((By.XPATH, first_of_recents_3)))
+        except Exception:
+            print('3rd row element not found, I try with other')
+            try:
+                first_image = WebDriverWait(browser, 10).until(
+                    EC.visibility_of_element_located((By.XPATH, first_of_recents_5)))
+            except Exception:
+                print('5rd row element not found, I stop here')
     time.sleep(5)
     first_image.click()
 
