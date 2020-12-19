@@ -52,10 +52,10 @@ def avoid_popups(browser, ita):
         browser.find_element_by_xpath("//button[text()='Non ora']").click()
     else:
         # wait save credentials pop-up and click not now
-        WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Not now"]')).click()
+        WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Not Now"]')).click()
         # wait notifications request and click not now
         browser.implicitly_wait(10)
-        browser.find_element_by_xpath("//button[text()='Not now']").click()
+        browser.find_element_by_xpath("//button[text()='Not Now']").click()
 
 
 def search_hashtag(browser, ita, hash_str_='#photooftheday'):
