@@ -23,9 +23,12 @@ def lunch_browser(path_to_chromedriver, images=True):
     return browser
 
 
-def cookies_accept(browser):
+def cookies_accept(browser, ita):
     browser.implicitly_wait(10)
-    browser.find_element_by_xpath("//button[text()='Accetta']").click()
+    if ita:
+        browser.find_element_by_xpath("//button[text()='Accetta']").click()
+    else:
+        browser.find_element_by_xpath("//button[text()='Accept']").click()
 
 
 def login(browser, username_str, password_str):
@@ -40,17 +43,27 @@ def login(browser, username_str, password_str):
     submit.submit()
 
 
-def avoid_popups(browser):
-    # wait save credentials pop-up and click not now
-    WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Non ora"]')).click()
-    # wait notifications request and click not now
-    browser.implicitly_wait(10)
-    browser.find_element_by_xpath("//button[text()='Non ora']").click()
+def avoid_popups(browser, ita):
+    if ita:
+        # wait save credentials pop-up and click not now
+        WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Non ora"]')).click()
+        # wait notifications request and click not now
+        browser.implicitly_wait(10)
+        browser.find_element_by_xpath("//button[text()='Non ora']").click()
+    else:
+        # wait save credentials pop-up and click not now
+        WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Not now"]')).click()
+        # wait notifications request and click not now
+        browser.implicitly_wait(10)
+        browser.find_element_by_xpath("//button[text()='Not now']").click()
 
 
-def search_hashtag(browser, hash_str_='#photooftheday'):
+def search_hashtag(browser, ita, hash_str_='#photooftheday'):
     # insert hashtag in search bar and double press enter
-    search_box_xpath = "//input[@placeholder='Cerca']"
+    if ita:
+        search_box_xpath = "//input[@placeholder='Cerca']"
+    else:
+        search_box_xpath = "//input[@placeholder='Search']"
     search_box = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, search_box_xpath)))
     search_box.send_keys(hash_str_)
     # store number of posts for relative hashtag

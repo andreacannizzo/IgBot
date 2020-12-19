@@ -12,13 +12,13 @@ from definitions import *
 
 
 browser = lunch_browser(path_to_chromedriver, False)
-cookies_accept(browser)
+cookies_accept(browser, ita)
 login(browser, username_str, password_str)
-avoid_popups(browser)
+avoid_popups(browser, ita)
 
 for hash_i in hash_str:
     print(f"searching for {hash_i} posts")
-    number_of_posts = search_hashtag(browser, hash_i)
+    number_of_posts = search_hashtag(browser, ita, hash_i)
     # max_number_of_scroll_to_bottom = math.floor(number_of_posts/100)
     # random_scrolls = random.randint(1, max_number_of_scroll_to_bottom)
     # print(f"total number of scroll to proceed = {random_scrolls}")
