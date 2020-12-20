@@ -1,5 +1,6 @@
-import os # ssh
-os.environ["DISPLAY"] = ":0" # ssh
+# set DISPLAY to 'remote' one
+import os
+os.environ["DISPLAY"] = ":0"
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
