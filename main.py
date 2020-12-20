@@ -9,6 +9,11 @@ from selenium.common.exceptions import TimeoutException
 #           path_to_chromedriver = '/path/to/chromedriver'
 from inputs import *
 from definitions import *
+import sys
+
+original_stdout = sys.stdout
+f = open('WorkSpace/IgBot/LogFiles/log_file.txt', 'w')
+f.close()
 
 
 browser = lunch_browser(path_to_chromedriver, False)
@@ -16,8 +21,12 @@ cookies_accept(browser, ita)
 login(browser, username_str, password_str)
 avoid_popups(browser, ita)
 
+total_aim_of_likes = 0
+total_viewed_posts = 0
+total_liked = 0
+
 for hash_i in hash_str:
-    print(f"searching for {hash_i} posts")
+    # print(f"searching for {hash_i} posts")
     number_of_posts = search_hashtag(browser, ita, hash_i)
     # max_number_of_scroll_to_bottom = math.floor(number_of_posts/100)
     # random_scrolls = random.randint(1, max_number_of_scroll_to_bottom)
@@ -46,17 +55,26 @@ for hash_i in hash_str:
                 skip += 1
         except TimeoutException:
             if tryings == max_tryings:
-                print(f'image did not load after {max_tryings} attempts')
+                # print(f'image did not load after {max_tryings} attempts')
                 browser.close()
                 exit()
             back_n_forth(browser)
             tryings += 1
 
     # display outcome
-    print(f'target of likes = {target_of_likes}')
-    print(f'likes = {liked}')
-    print(f'total viewed = {total}')
+    with open('WorkSpace/IgBot/LogFiles/log_file.txt', 'a') as f:
+        sys.stdout = f
+        print(f"- {hash_i} posts, target of likes = {target_of_likes}, likes = {liked}, total viewed = {total}")
+    total_aim_of_likes += target_of_likes
+    total_viewed_posts += total
+    total_liked += liked
 
+with open('WorkSpace/IgBot/LogFiles/log_file.txt', 'a') as f:
+    sys.stdout = f
+    print(f"total target = {total_aim_of_likes}, total viewed = {total_viewed_posts}, total liked = {total_liked}")
 
+sys.stdout = original_stdout
+with open('WorkSpace/IgBot/LogFiles/log_file.txt', 'r') as f:
+    print(f.read())
 # close browser and exit
 browser.close()

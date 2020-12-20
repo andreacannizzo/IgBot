@@ -10,6 +10,7 @@
 venv
 Selenium
 WorkingFiles
+LogFiles
 .DS_Store
 inputs.py
 __pycache__/

@@ -74,7 +74,7 @@ def search_hashtag(browser, ita, hash_str_='#photooftheday'):
     tag_xpath_button = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, tag_xpath)))
     number_of_posts_str = tag_xpath_button.get_property("innerHTML")
     number_of_posts = int(re.sub("[^\d]", "", number_of_posts_str))
-    print(f"total number of posts for {hash_str_} = {number_of_posts}")
+    # print(f"total number of posts for {hash_str_} = {number_of_posts}")
     time.sleep(2)
     search_box.send_keys(Keys.ENTER)
     time.sleep(2)
@@ -109,14 +109,14 @@ def click_first_pic(browser):
         time.sleep(5)
         first_image.click()
     except Exception:
-        print('1st row element not found, I try with other')
+        # print('1st row element not found, I try with other')
         try:
             first_image = WebDriverWait(browser, 10).until(
                 EC.visibility_of_element_located((By.XPATH, first_of_recents_3)))
             time.sleep(5)
             first_image.click()
         except Exception:
-            print('3rd row element not found, I try with other')
+            # print('3rd row element not found, I try with other')
             try:
                 first_image = WebDriverWait(browser, 10).until(
                     EC.visibility_of_element_located((By.XPATH, first_of_recents_5)))
@@ -133,7 +133,7 @@ def like_if_its_ok(browser, number):
     if "#262626" in color:
         time.sleep(random.uniform(2, 5))
         like.click()
-        print(number + 1)
+        # print(number + 1)
         time.sleep(random.uniform(2, 5))
         return 1
     else:
@@ -146,5 +146,5 @@ def back_n_forth(browser):
     # print("go back")
     # browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[1]").click()
     time.sleep(10)
-    print("go forth")
+    # print("go forth")
     browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]").click()
