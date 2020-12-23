@@ -10,9 +10,12 @@ from selenium.common.exceptions import TimeoutException
 from inputs import *
 from definitions import *
 import sys
+import time
 
 original_stdout = sys.stdout
-f = open('WorkSpace/IgBot/LogFiles/log_file.txt', 'w')
+file_name = time.strftime("%Y/%m/%d-%H:%M:%S")
+file_name = file_name + ".txt"
+f = open('WorkSpace/IgBot/LogFiles/' + file_name, 'w')
 f.close()
 
 
@@ -62,19 +65,19 @@ for hash_i in hash_str:
             tryings += 1
 
     # display outcome
-    with open('WorkSpace/IgBot/LogFiles/log_file.txt', 'a') as f:
+    with open('WorkSpace/IgBot/LogFiles/' + file_name, 'a') as f:
         sys.stdout = f
         print(f"- {hash_i} posts, target of likes = {target_of_likes}, likes = {liked}, total viewed = {total}")
     total_aim_of_likes += target_of_likes
     total_viewed_posts += total
     total_liked += liked
 
-with open('WorkSpace/IgBot/LogFiles/log_file.txt', 'a') as f:
+with open('WorkSpace/IgBot/LogFiles/' + file_name, 'a') as f:
     sys.stdout = f
     print(f"total target = {total_aim_of_likes}, total viewed = {total_viewed_posts}, total liked = {total_liked}")
 
 sys.stdout = original_stdout
-with open('WorkSpace/IgBot/LogFiles/log_file.txt', 'r') as f:
+with open('WorkSpace/IgBot/LogFiles/' + file_name, 'r') as f:
     print(f.read())
 # close browser and exit
 browser.close()
