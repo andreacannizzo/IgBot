@@ -14,7 +14,10 @@ import time
 
 original_stdout = sys.stdout
 file_name = time.strftime("%Y_%m_%d-%H_%M_%S")
-file_name = "LogFiles/" + file_name + ".txt"
+if mac:
+    file_name = "/Users/andreacannizzo/WorkSpace/IgBot/LogFiles/" + file_name + ".txt"
+else:
+    file_name = "/home/pi/WorkSpace/IgBot/LogFiles/" + file_name + ".txt"
 f = open(file_name, "w")
 f.close()
 
