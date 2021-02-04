@@ -71,15 +71,16 @@ def search_hashtag(browser, ita, hash_str_='#photooftheday'):
     search_box.send_keys(hash_str_)
     # store number of posts for relative hashtag
     tag_xpath = "//*[@id='react-root']/section/nav/div[2]/div/div/div[2]/div[4]/div/a[1]/div/div/div[2]/span/span"
-    tag_xpath_button = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, tag_xpath)))
-    number_of_posts_str = tag_xpath_button.get_property("innerHTML")
-    number_of_posts = int(re.sub("[^\d]", "", number_of_posts_str))
+    # tag_xpath_button = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, tag_xpath)))
+    # number_of_posts_str = tag_xpath_button.get_property("innerHTML")
+    # number_of_posts = int(re.sub("[^\d]", "", number_of_posts_str))
     # print(f"total number of posts for {hash_str_} = {number_of_posts}")
     time.sleep(2)
     search_box.send_keys(Keys.ENTER)
     time.sleep(2)
     search_box.send_keys(Keys.ENTER)
-    return number_of_posts
+    # return number_of_posts
+    return 1
 
 
 def scroll_down_function(browser, nr_of_scroll):
