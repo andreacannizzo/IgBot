@@ -51,8 +51,8 @@ def avoid_popups(browser, ita):
         # wait save credentials pop-up and click not now
         WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Non ora"]')).click()
         # wait notifications request and click not now
-        browser.implicitly_wait(10)
-        browser.find_element_by_xpath("//button[text()='Non ora']").click()
+        # &&& browser.implicitly_wait(10)
+        # &&& browser.find_element_by_xpath("//button[text()='Non ora']").click()
     else:
         # wait save credentials pop-up and click not now
         WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Not Now"]')).click()
@@ -128,7 +128,10 @@ def click_first_pic(browser):
 
 
 def like_if_its_ok(browser, number):
-    like_xpath = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
+    # like_xpath = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
+    like_xpath = '/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button'
+    # like_xpath = '/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button/div/span/svg'
+    # like_xpath = '/html/body/div[4]/div[1]/div/div/a[2]'
     like = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, like_xpath)))
     color = like.get_property("innerHTML")
     if "#262626" in color:
@@ -148,4 +151,4 @@ def back_n_forth(browser):
     # browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[1]").click()
     time.sleep(10)
     # print("go forth")
-    browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]").click()
+    browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]").click()
