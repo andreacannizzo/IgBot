@@ -128,7 +128,8 @@ def click_first_pic(browser):
 
 def like_if_its_ok(browser, number):
     # like_xpath = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
-    like_xpath = '/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button'
+    # like_xpath = '/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button'
+    like_xpath = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
     # like_xpath = '/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button/div/span/svg'
     # like_xpath = '/html/body/div[4]/div[1]/div/div/a[2]'
     like = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, like_xpath)))

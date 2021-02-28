@@ -53,7 +53,9 @@ for hash_i in hash_str:
         try:
             result_of_LIIO = like_if_its_ok(browser, liked)
             liked += result_of_LIIO
-            browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]").click()
+            next_path = '/html/body/div[5]/div[1]/div/div/a[2]'
+            # browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]").click()
+            browser.find_element_by_xpath(next_path).click()
             total += 1
             if result_of_LIIO == 1:
                 skip = 0
