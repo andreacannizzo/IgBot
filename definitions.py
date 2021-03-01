@@ -151,4 +151,5 @@ def back_n_forth(browser):
     # browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[1]").click()
     time.sleep(10)
     # print("go forth")
-    browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]").click()
+    next_path = '/html/body/div[5]/div[1]/div/div/a[2]'
+    browser.find_element_by_xpath(next_path).click()
