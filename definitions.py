@@ -69,7 +69,7 @@ def search_hashtag(browser, ita, hash_str_='#photooftheday'):
     search_box = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, search_box_xpath)))
     search_box.send_keys(hash_str_)
     # store number of posts for relative hashtag
-    tag_xpath = "//*[@id='react-root']/section/nav/div[2]/div/div/div[2]/div[4]/div/a[1]/div/div/div[2]/span/span"
+    # tag_xpath = "//*[@id='react-root']/section/nav/div[2]/div/div/div[2]/div[4]/div/a[1]/div/div/div[2]/span/span"
     # tag_xpath_button = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, tag_xpath)))
     # number_of_posts_str = tag_xpath_button.get_property("innerHTML")
     # number_of_posts = int(re.sub("[^\d]", "", number_of_posts_str))
@@ -99,39 +99,31 @@ def scroll_down_function(browser, nr_of_scroll):
             last_height = new_height
 
 
-def click_first_pic(browser):
-    first_of_populars = "//*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]"
-    first_of_recents_1 = "//*[@id='react-root']/section/main/article/div[2]/div/div[1]/div[1]"
-    first_of_recents_3 = "//*[@id='react-root']/section/main/article/div[2]/div/div[3]/div[1]"
-    first_of_recents_5 = "//*[@id='react-root']/section/main/article/div[2]/div/div[5]/div[1]"
+def click_first_pic(browser, first_rec, second_rec, third_rec, ):
+    # first_of_populars = "//*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]"
     try:
-        first_image = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, first_of_recents_1)))
+        first_image = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, first_rec)))
         time.sleep(5)
         first_image.click()
     except Exception:
         # print('1st row element not found, I try with other')
         try:
             first_image = WebDriverWait(browser, 10).until(
-                EC.visibility_of_element_located((By.XPATH, first_of_recents_3)))
+                EC.visibility_of_element_located((By.XPATH, second_rec)))
             time.sleep(5)
             first_image.click()
         except Exception:
             # print('3rd row element not found, I try with other')
             try:
                 first_image = WebDriverWait(browser, 10).until(
-                    EC.visibility_of_element_located((By.XPATH, first_of_recents_5)))
+                    EC.visibility_of_element_located((By.XPATH, third_rec)))
                 time.sleep(5)
                 first_image.click()
             except Exception:
                 print('5rd row element not found, I stop here')
 
 
-def like_if_its_ok(browser, number):
-    # like_xpath = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
-    # like_xpath = '/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button'
-    like_xpath = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
-    # like_xpath = '/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button/div/span/svg'
-    # like_xpath = '/html/body/div[4]/div[1]/div/div/a[2]'
+def like_if_its_ok(browser, number, like_xpath):
     like = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, like_xpath)))
     color = like.get_property("innerHTML")
     if "#262626" in color:
@@ -145,11 +137,10 @@ def like_if_its_ok(browser, number):
         return 0
 
 
-def back_n_forth(browser):
+def back_n_forth(browser, next_path):
     # time.sleep(10)
     # print("go back")
     # browser.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[1]").click()
     time.sleep(10)
     # print("go forth")
-    next_path = '/html/body/div[5]/div[1]/div/div/a[2]'
     browser.find_element_by_xpath(next_path).click()

@@ -38,7 +38,7 @@ for hash_i in hash_str:
     # random_scrolls = random.randint(1, max_number_of_scroll_to_bottom)
     # print(f"total number of scroll to proceed = {random_scrolls}")
     # scroll_down_function(browser, random_scrolls)
-    click_first_pic(browser)
+    click_first_pic(browser, first_rec, second_rec, third_rec)
 
     # create variables that counts liked posts, total viewed, tryings, result of like function and number
     # of total posts skipped in a row
@@ -51,10 +51,8 @@ for hash_i in hash_str:
     # starting from the most recent post there is no need to change the xpath of the 'next_post' bc they are all equal
     while (liked < target_of_likes) and (skip < max_skip):
         try:
-            result_of_LIIO = like_if_its_ok(browser, liked)
+            result_of_LIIO = like_if_its_ok(browser, liked, like_xpath)
             liked += result_of_LIIO
-            next_path = '/html/body/div[5]/div[1]/div/div/a[2]'
-            # browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]").click()
             browser.find_element_by_xpath(next_path).click()
             total += 1
             if result_of_LIIO == 1:
@@ -66,7 +64,7 @@ for hash_i in hash_str:
                 # print(f'image did not load after {max_tryings} attempts')
                 browser.close()
                 exit()
-            back_n_forth(browser)
+            back_n_forth(browser, next_path)
             tryings += 1
 
     # display outcome
@@ -84,5 +82,6 @@ with open(file_name, 'a') as f:
 sys.stdout = original_stdout
 with open(file_name, 'r') as f:
     print(f.read())
+
 # close browser and exit
 browser.close()
