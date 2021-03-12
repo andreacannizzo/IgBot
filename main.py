@@ -11,13 +11,15 @@ from inputs import *
 from definitions import *
 import sys
 import time
+from datetime import datetime
 
 original_stdout = sys.stdout
-file_name = time.strftime("%Y_%m_%d-%H_%M_%S")
+start_time = time.strftime("%Y_%m_%d-%H_%M_%S")
+start_timer = datetime.now()
 if mac:
-    file_name = "/Users/andreacannizzo/WorkSpace/IgBot/LogFiles/" + file_name + ".txt"
+    file_name = "/Users/andreacannizzo/WorkSpace/IgBot/LogFiles/" + start_time + ".txt"
 else:
-    file_name = "/home/pi/WorkSpace/IgBot/LogFiles/" + file_name + ".txt"
+    file_name = "/home/pi/WorkSpace/IgBot/LogFiles/" + start_time + ".txt"
 f = open(file_name, "w")
 f.close()
 
@@ -75,9 +77,11 @@ for hash_i in hash_str:
     total_viewed_posts += total
     total_liked += liked
 
+time_elapsed = datetime.now() - start_timer
 with open(file_name, 'a') as f:
     sys.stdout = f
     print(f"total target = {total_aim_of_likes}, total viewed = {total_viewed_posts}, total liked = {total_liked}")
+    print(f"total time (hh:mm:ss) = {format(time_elapsed)}")
 
 sys.stdout = original_stdout
 with open(file_name, 'r') as f:
