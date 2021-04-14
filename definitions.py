@@ -28,7 +28,7 @@ def lunch_browser(path_to_chromedriver, images=True):
 def cookies_accept(browser, ita):
     browser.implicitly_wait(10)
     if ita:
-        browser.find_element_by_xpath("//button[text()='Accetta']").click()
+        browser.find_element_by_xpath("//button[text()='Accetta tutti']").click()
     else:
         browser.find_element_by_xpath("//button[text()='Accept']").click()
 
