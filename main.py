@@ -16,6 +16,8 @@ from datetime import datetime
 original_stdout = sys.stdout
 start_time = time.strftime("%Y_%m_%d-%H_%M_%S")
 start_timer = datetime.now()
+
+# Open a new Log file in a directory dependently if it's running on the Mac or the Raspberry Pi
 if mac:
     file_name = "/Users/andreacannizzo/WorkSpace/IgBot/LogFiles/" + start_time + ".txt"
 else:
@@ -23,8 +25,11 @@ else:
 f = open(file_name, "w")
 f.close()
 
+# open a browser and get its handle
+browser = launch_browser(path_to_chromedriver, False)
+# go to instagram
+browser.get('https://www.instagram.com/')
 
-browser = lunch_browser(path_to_chromedriver, False)
 cookies_accept(browser, ita)
 login(browser, username_str, password_str)
 avoid_popups(browser, ita)

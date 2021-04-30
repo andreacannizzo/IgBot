@@ -10,18 +10,19 @@ import time
 import random
 
 
-def lunch_browser(path_to_chromedriver, images=True):
+# launch the browser : if images=True than browser will show images in it. returns handle to browser.
+def launch_browser(path_to_chromedriver, images=True):
     if not images:
         # create browser without images
         chrome_options = webdriver.ChromeOptions()
         prefs = {"profile.managed_default_content_settings.images": 2}
         chrome_options.add_experimental_option("prefs", prefs)
         browser = webdriver.Chrome(path_to_chromedriver, chrome_options=chrome_options)
-        browser.get('https://www.instagram.com/')
+        #2del browser.get('https://www.instagram.com/')
     else:
         # create browser with images
         browser = webdriver.Chrome(path_to_chromedriver)
-        browser.get('https://www.instagram.com/')
+        #2del browser.get('https://www.instagram.com/')
     return browser
 
 

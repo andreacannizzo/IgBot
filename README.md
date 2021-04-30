@@ -7,7 +7,7 @@ A simple bot to like posts and gain followers on Instagram
 ### Installation:
 
 1. add Selenium package in the Python interpreter of the project
-2. in order to be able to use `lunch_browser(path_to_chromedriver, False)`, thus prohibiting the webdriver to load any image, go to 
+2. in order to be able to use `launch_browser(path_to_chromedriver, False)`, thus prohibiting the webdriver to load any image, go to 
    ```sh
    http://chrome-extension-downloader.com/
    ```
