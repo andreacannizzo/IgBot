@@ -1,18 +1,11 @@
 from selenium.common.exceptions import TimeoutException
-# private variables and information are stored in inputs.py file
-#           username_str = 'username'
-#           password_str = 'password'
-#           hash_str = {"#1", "#2", "#3", "#4", "#5", "#6"}
-#           target_of_likes = 100
-#           max_tryings = 3
-#           max_skip = 10
-#           path_to_chromedriver = '/path/to/chromedriver'
 from inputs import *
 from definitions import *
 import sys
 import time
 from datetime import datetime
 
+# save log files and time informations
 original_stdout = sys.stdout
 start_time = time.strftime("%Y_%m_%d-%H_%M_%S")
 start_timer = datetime.now()
@@ -29,26 +22,29 @@ f.close()
 browser = launch_browser(path_to_chromedriver, False)
 # go to instagram
 browser.get('https://www.instagram.com/')
-
+# accept cookies
 cookies_accept(browser, ita)
+# log in with accounts credentials
 login(browser, username_str, password_str)
-avoid_popups(browser, ita)
+# avoid 'save credentials' popup and then 'notifications' popup, the same function works for both
+avoid_popup(browser, ita)
+avoid_popup(browser, ita)
 
+# create session history variables
 total_aim_of_likes = 0
 total_viewed_posts = 0
 total_liked = 0
 
+# starts session
 for hash_i in hash_str:
-    # print(f"searching for {hash_i} posts")
-    number_of_posts = search_hashtag(browser, ita, hash_i)
-    # max_number_of_scroll_to_bottom = math.floor(number_of_posts/100)
-    # random_scrolls = random.randint(1, max_number_of_scroll_to_bottom)
-    # print(f"total number of scroll to proceed = {random_scrolls}")
-    # scroll_down_function(browser, random_scrolls)
-    click_first_pic(browser, first_rec, second_rec, third_rec)
 
-    # create variables that counts liked posts, total viewed, tryings, result of like function and number
-    # of total posts skipped in a row
+    # print(f"searching for {hash_i} posts")
+    search_hashtag(browser, ita, hash_i)
+    click_first_pic(browser, first_recent)
+
+    # create other session and utility variables
+    # tryings = number of times IgBot skips to a new post if the previous isn't active
+    # skip = counter of how many times in a row there are already-liked posts
     liked = 0
     total = 0
     tryings = 0
@@ -58,23 +54,29 @@ for hash_i in hash_str:
     # starting from the most recent post there is no need to change the xpath of the 'next_post' bc they are all equal
     while (liked < target_of_likes) and (skip < max_skip):
         try:
+            # result_of_LIIO = 1 if liked successfully, 0 if not liked because already liked
             result_of_LIIO = like_if_its_ok(browser, liked, like_xpath)
+            # update liked session variable
             liked += result_of_LIIO
+            # go to next post
             browser.find_element_by_xpath(next_path).click()
+            # whether it was a like or not the total amount of posts viewed increases by one
             total += 1
+            # if it's been a like than the counter of already-liked posts is reset to 0
             if result_of_LIIO == 1:
                 skip = 0
             else:
                 skip += 1
         except TimeoutException:
             if tryings == max_tryings:
-                # print(f'image did not load after {max_tryings} attempts')
+                print(f'Images did not load after {max_tryings} attempts')
                 browser.close()
                 exit()
-            back_n_forth(browser, next_path)
+            # when post doesn't load IgBot tries to skip to the next one max_tryings times
+            skip_to_next_one(browser, next_path)
             tryings += 1
 
-    # display outcome
+    # display local outcome
     with open(file_name, 'a') as f:
         sys.stdout = f
         print(f"- {hash_i} posts, target of likes = {target_of_likes}, likes = {liked}, total viewed = {total}")
@@ -82,12 +84,14 @@ for hash_i in hash_str:
     total_viewed_posts += total
     total_liked += liked
 
+# saves time when finishes session and display global outcome
 time_elapsed = datetime.now() - start_timer
 with open(file_name, 'a') as f:
     sys.stdout = f
     print(f"total target = {total_aim_of_likes}, total viewed = {total_viewed_posts}, total liked = {total_liked}")
     print(f"total time (hh:mm:ss) = {format(time_elapsed)}")
 
+# displays outcome in python console
 sys.stdout = original_stdout
 with open(file_name, 'r') as f:
     print(f.read())
