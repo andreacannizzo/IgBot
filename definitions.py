@@ -88,14 +88,28 @@ def scroll_down_function(browser, nr_of_scroll):
 
 
 # click first pic of the recents
-def click_first_pic(browser, first_rec):
+def click_first_pic(browser, first_rec, second_rec, third_rec):
     try:
         first_image = WebDriverWait(browser, 10).until(
             EC.visibility_of_element_located((By.XPATH, first_rec)))
         time.sleep(5)
         first_image.click()
     except Exception:
-        print(f'post in {first_rec} not found')
+        # print(f'post in {first_rec} not found')
+        try:
+            first_image = WebDriverWait(browser, 10).until(
+                EC.visibility_of_element_located((By.XPATH, second_rec)))
+            time.sleep(5)
+            first_image.click()
+        except Exception:
+            # print(f'post in {second_rec} not found')
+            try:
+                first_image = WebDriverWait(browser, 10).until(
+                    EC.visibility_of_element_located((By.XPATH, third_rec)))
+                time.sleep(5)
+                first_image.click()
+            except Exception:
+                print(f'post in {third_rec} not found')
 
 
 def like_if_its_ok(browser, number, like_xpath):

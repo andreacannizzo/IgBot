@@ -40,7 +40,7 @@ for hash_i in hash_str:
 
     # print(f"searching for {hash_i} posts")
     search_hashtag(browser, ita, hash_i)
-    click_first_pic(browser, first_recent)
+    click_first_pic(browser, first_recent, second_recent, third_recent)
 
     # create other session and utility variables
     # tryings = number of times IgBot skips to a new post if the previous isn't active
