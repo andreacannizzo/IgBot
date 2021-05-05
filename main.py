@@ -57,7 +57,12 @@ for hash_i in hash_str:
             # get account's handle of current post viewed (works but not useful now)
             # ig_handle_str = account_handle(browser, handle_xpath)
             # result_of_LIIO = 1 if liked successfully, 0 if not liked because already liked
+            # get current URL (of post) string
+            # browser.current_url
             result_of_LIIO = like_if_its_ok(browser, liked, like_xpath)
+            # if liked than append entry in Log file
+            # if result_of_LIIO:
+            #    append_entry(browser, account_handle(browser, handle_xpath))
             # update liked session variable
             liked += result_of_LIIO
             # go to next post

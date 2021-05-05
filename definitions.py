@@ -6,6 +6,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from datetime import datetime
+from pickle import dump
 import time
 import random
 
@@ -135,3 +137,14 @@ def account_handle(browser, handle_xpath):
     handle_handle = WebDriverWait(browser, 1).until(
         EC.visibility_of_element_located((By.XPATH, handle_xpath)))
     return handle_handle.text
+
+
+# Insert new line in Log file (da finire)
+def append_entry_(browser, account_handle_str):
+    new_entry = {"action": "liked",
+                 "account_handle": account_handle_str,
+                 "time": datetime.now(),
+                 "post_URL": browser.current_url}
+    with open("LogFilesPickle", "ab+") as file:
+        dump(new_entry, file)
+
