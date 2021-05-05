@@ -54,6 +54,8 @@ for hash_i in hash_str:
     # starting from the most recent post there is no need to change the xpath of the 'next_post' bc they are all equal
     while (liked < target_of_likes) and (skip < max_skip):
         try:
+            # get account's handle of current post viewed (works but not useful now)
+            # ig_handle_str = account_handle(browser, handle_xpath)
             # result_of_LIIO = 1 if liked successfully, 0 if not liked because already liked
             result_of_LIIO = like_if_its_ok(browser, liked, like_xpath)
             # update liked session variable

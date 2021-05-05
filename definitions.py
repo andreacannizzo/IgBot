@@ -128,3 +128,10 @@ def like_if_its_ok(browser, number, like_xpath):
 def skip_to_next_one(browser, next_path):
     time.sleep(10)
     browser.find_element_by_xpath(next_path).click()
+
+
+# Returns string containing account's handle of current viewed post
+def account_handle(browser, handle_xpath):
+    handle_handle = WebDriverWait(browser, 1).until(
+        EC.visibility_of_element_located((By.XPATH, handle_xpath)))
+    return handle_handle.text

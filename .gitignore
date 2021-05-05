@@ -13,6 +13,7 @@ WorkingFiles
 LogFiles
 .DS_Store
 inputs.py
+temp.py
 __pycache__/
 
 # User-specific stuff
