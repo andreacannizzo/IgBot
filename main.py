@@ -22,10 +22,12 @@ f.close()
 browser = launch_browser(path_to_chromedriver, False)
 # go to instagram
 browser.get('https://www.instagram.com/')
-# accept cookies
-cookies_accept(browser, ita)
+# accept cookies 1
+cookies_accept(browser, ita, 'Accetta tutti')
 # log in with accounts credentials
 login(browser, username_str, password_str)
+# accept cookies 2
+cookies_accept(browser, ita, 'Consenti tutti i cookie')
 # avoid 'save credentials' popup and then 'notifications' popup, the same function works for both
 avoid_popup(browser, ita)
 avoid_popup(browser, ita)
