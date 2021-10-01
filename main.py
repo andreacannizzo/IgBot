@@ -4,6 +4,7 @@ from definitions import *
 import sys
 import time
 from datetime import datetime
+import chromedriver_autoinstaller
 
 # save log files and time informations
 original_stdout = sys.stdout
@@ -18,8 +19,11 @@ else:
 f = open(file_name, "w")
 f.close()
 
+# auto download latest chromedriver
+chromedriver_autoinstaller.install()
 # open a browser and get its handle
-browser = launch_browser(path_to_chromedriver, False)
+# browser = launch_browser(path_to_chromedriver, False)
+browser = launch_browser(auto_chromedriver, False)
 # go to instagram
 browser.get('https://www.instagram.com/')
 # accept cookies 1
