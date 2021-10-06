@@ -19,11 +19,14 @@ else:
 f = open(file_name, "w")
 f.close()
 
-# auto download latest chromedriver
-chromedriver_autoinstaller.install()
-# open a browser and get its handle
-# browser = launch_browser(path_to_chromedriver, False)
-browser = launch_browser(auto_chromedriver, False)
+# auto download latest chromedriver if mac then open a browser and get its handle
+if mac:
+    chromedriver_autoinstaller.install()
+    browser = launch_browser(auto_chromedriver, False)
+else:
+    chromedriver_autoinstaller.install()
+    path_to_chromedriver = '/home/pi/WorkSpace/IgBot/WorkingFiles/chromedriver_linux64'
+    browser = launch_browser(path_to_chromedriver, False)
 # go to instagram
 browser.get('https://www.instagram.com/')
 # accept cookies 1
