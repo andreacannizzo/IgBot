@@ -29,12 +29,12 @@ def launch_browser(path_to_chromedriver, images=True):
 
 
 # accept cookies in popup
-def cookies_accept(browser, ita, text='Accetta tutti'):
+def cookies_accept(browser, ita):
     browser.implicitly_wait(10)
     if ita:
-        browser.find_element_by_xpath("//button[text()='" + text + "']").click()
+        browser.find_element_by_xpath("//button[text()='Accetta tutti']").click()
     else:
-        browser.find_element_by_xpath("//button[text()='Accept']").click()
+        browser.find_element_by_xpath("//button[text()='Accept All']").click()
 
 
 # logs in with account credentials specified in inputs.py file

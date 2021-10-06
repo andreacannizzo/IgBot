@@ -27,7 +27,7 @@ browser = launch_browser(auto_chromedriver, False)
 # go to instagram
 browser.get('https://www.instagram.com/')
 # accept cookies 1
-cookies_accept(browser, ita, 'Accetta tutti')
+cookies_accept(browser, ita)
 # log in with accounts credentials
 login(browser, username_str, password_str)
 # accept cookies 2
