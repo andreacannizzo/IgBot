@@ -24,7 +24,6 @@ if mac:
     chromedriver_autoinstaller.install()
     browser = launch_browser(auto_chromedriver, False)
 else:
-    chromedriver_autoinstaller.install()
     path_to_chromedriver = '/home/pi/WorkSpace/IgBot/WorkingFiles/chromedriver_linux64'
     browser = launch_browser(path_to_chromedriver, False)
 # go to instagram
