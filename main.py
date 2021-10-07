@@ -29,14 +29,14 @@ else:
 # go to instagram
 browser.get('https://www.instagram.com/')
 # accept cookies 1
-cookies_accept(browser, ita)
+avoid_popup(browser, ita, "Accept All")
 # log in with accounts credentials
 login(browser, username_str, password_str)
 # accept cookies 2
 # cookies_accept(browser, ita, 'Consenti tutti i cookie')
 # avoid 'save credentials' popup and then 'notifications' popup, the same function works for both
-avoid_popup(browser, ita)
-avoid_popup(browser, ita)
+avoid_popup(browser, ita, "Not Now")
+avoid_popup(browser, ita, "Not Now")
 
 # create session history variables
 total_aim_of_likes = 0
@@ -62,6 +62,14 @@ for hash_i in hash_str:
     # starting from the most recent post there is no need to change the xpath of the 'next_post' bc they are all equal
     while (liked < target_of_likes) and (skip < max_skip):
         try:
+            # If there is a restriction of actions IgBot detects it and stops
+            try:
+                browser.find_element_by_xpath("//button[text()='Segnala un problema']").click()
+                print("Instagram ha bloccato l'attività")
+                browser.close()
+                exit()
+            except:
+                pass
             # get account's handle of current post viewed (works but not useful now)
             # ig_handle_str = account_handle(browser, handle_xpath)
             # result_of_LIIO = 1 if liked successfully, 0 if not liked because already liked

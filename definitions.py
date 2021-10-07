@@ -28,13 +28,23 @@ def launch_browser(path_to_chromedriver, images=True):
     return browser
 
 
-# accept cookies in popup
-def cookies_accept(browser, ita):
+def avoid_popup(browser, ita, text_of_button):
     browser.implicitly_wait(10)
-    if ita:
-        browser.find_element_by_xpath("//button[text()='Accetta tutti']").click()
-    else:
-        browser.find_element_by_xpath("//button[text()='Accept All']").click()
+    if text_of_button == "Accept All":
+        if ita:
+            browser.find_element_by_xpath("//button[text()='Accetta tutti']").click()
+        else:
+            browser.find_element_by_xpath("//button[text()='Accept All']").click()
+    if text_of_button == "Not Now":
+        if ita:
+            browser.find_element_by_xpath("//button[text()='Non ora']").click()
+        else:
+            browser.find_element_by_xpath("//button[text()='Not Now']").click()
+    if text_of_button == "Report a problem":
+        if ita:
+            browser.find_element_by_xpath("//button[text()='Segnala un problema']").click()
+        else:
+            browser.find_element_by_xpath("//button[text()='Report a Problem']").click()
 
 
 # logs in with account credentials specified in inputs.py file
@@ -48,14 +58,6 @@ def login(browser, username_str, password_str):
     # confirm
     submit = browser.find_element_by_tag_name('form')
     submit.submit()
-
-
-# waits pop-up and click accordingly
-def avoid_popup(browser, ita):
-    if ita:
-        WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Non ora"]')).click()
-    else:
-        WebDriverWait(browser, 15).until(lambda d: d.find_element_by_xpath('//button[text()="Not Now"]')).click()
 
 
 # insert hashtag in search bar and double press enter
