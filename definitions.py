@@ -120,9 +120,9 @@ def like_if_its_ok(browser, number, like_xpath):
     like = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, like_xpath)))
     color = like.get_property("innerHTML")
     if "#262626" in color:
-        time.sleep(random.uniform(3, 6))
+        time.sleep(random.uniform(3, 5))
         like.click()
-        time.sleep(random.uniform(3, 6))
+        time.sleep(random.uniform(3, 5))
         return 1
     else:
         time.sleep(random.uniform(3, 5))
