@@ -117,7 +117,8 @@ def click_first_pic(browser, first_rec, second_rec, third_rec):
 
 
 def like_if_its_ok(browser, number, like_xpath):
-    like = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, like_xpath)))
+    like = WebDriverWait(browser, 5).until(
+        EC.visibility_of_element_located((By.XPATH, like_xpath)))
     color = like.get_property("innerHTML")
     if "#262626" in color:
         time.sleep(random.uniform(3, 5))
