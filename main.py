@@ -11,32 +11,25 @@ original_stdout = sys.stdout
 start_time = time.strftime("%Y_%m_%d-%H_%M_%S")
 start_timer = datetime.now()
 
-# Open a new Log file in a directory dependently if it's running on the Mac or the Raspberry Pi
-if mac:
-    file_name = "/Users/andreacannizzo/WorkSpace/IgBot/LogFiles/" + start_time + ".txt"
-else:
-    file_name = "/home/pi/WorkSpace/IgBot/LogFiles/" + start_time + ".txt"
+# Open a new Log file in a directory (relative directory so it does not change between Rasp and Mac)
+file_name = "LogFiles/" + start_time + ".txt"
 f = open(file_name, "w")
 f.close()
 
 # auto download latest chromedriver if mac then open a browser and get its handle
-if mac:
-    chromedriver_autoinstaller.install()
-    browser = launch_browser(auto_chromedriver, False)
-else:
-    path_to_chromedriver = '/home/pi/WorkSpace/IgBot/WorkingFiles/chromedriver_linux64'
-    browser = launch_browser(path_to_chromedriver, False)
+# chromedriver_autoinstaller.install() TODO fix the chromedriver_autoinstaller for Rasp
+browser = launch_browser(auto_chromedriver, False)
 # go to instagram
 browser.get('https://www.instagram.com/')
 # accept cookies 1
-avoid_popup(browser, ita, "Accept All")
+avoid_popup(browser, "Accept All")
 # log in with accounts credentials
 login(browser, username_str, password_str)
 # accept cookies 2
-# cookies_accept(browser, ita, 'Consenti tutti i cookie')
+# cookies_accept(browser, 'Consenti tutti i cookie')
 # avoid 'save credentials' popup and then 'notifications' popup, the same function works for both
-avoid_popup(browser, ita, "Not Now")
-avoid_popup(browser, ita, "Not Now")
+avoid_popup(browser, "Not Now")
+avoid_popup(browser, "Not Now")
 
 # create session history variables
 total_aim_of_likes = 0
@@ -47,7 +40,7 @@ total_liked = 0
 for hash_i in hash_str:
 
     # print(f"searching for {hash_i} posts")
-    search_hashtag(browser, ita, hash_i)
+    search_hashtag(browser, hash_i)
     click_first_pic(browser, first_recent, second_recent, third_recent)
 
     # create other session and utility variables

@@ -17,9 +17,12 @@ def launch_browser(path_to_chromedriver, images=True):
     if not images:
         # create browser without images
         chrome_options = webdriver.ChromeOptions()
-        prefs = {"profile.managed_default_content_settings.images": 2}
-        chrome_options.add_experimental_option("prefs", prefs)
-        browser = webdriver.Chrome(path_to_chromedriver, chrome_options=chrome_options)
+        # Add no images option
+        chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2,
+                                                         'intl.accept_languages': 'en,en_US'})
+        # Add english browser option
+        # chrome_options.add_experimental_option("prefs", {'intl.accept_languages': 'en,en_US'})
+        browser = webdriver.Chrome(path_to_chromedriver, options=chrome_options)
         #2del browser.get('https://www.instagram.com/')
     else:
         # create browser with images
@@ -28,23 +31,14 @@ def launch_browser(path_to_chromedriver, images=True):
     return browser
 
 
-def avoid_popup(browser, ita, text_of_button):
+def avoid_popup(browser, text_of_button):
     browser.implicitly_wait(10)
     if text_of_button == "Accept All":
-        if ita:
-            browser.find_element_by_xpath("//button[text()='Accetta tutti']").click()
-        else:
-            browser.find_element_by_xpath("//button[text()='Accept All']").click()
+        browser.find_element_by_xpath("//button[text()='Accept All']").click()
     if text_of_button == "Not Now":
-        if ita:
-            browser.find_element_by_xpath("//button[text()='Non ora']").click()
-        else:
-            browser.find_element_by_xpath("//button[text()='Not Now']").click()
+        browser.find_element_by_xpath("//button[text()='Not Now']").click()
     if text_of_button == "Report a problem":
-        if ita:
-            browser.find_element_by_xpath("//button[text()='Segnala un problema']").click()
-        else:
-            browser.find_element_by_xpath("//button[text()='Report a Problem']").click()
+        browser.find_element_by_xpath("//button[text()='Report a Problem']").click()
 
 
 # logs in with account credentials specified in inputs.py file
@@ -61,11 +55,8 @@ def login(browser, username_str, password_str):
 
 
 # insert hashtag in search bar and double press enter
-def search_hashtag(browser, ita, hash_str_='#photooftheday'):
-    if ita:
-        search_box_xpath = "//input[@placeholder='Cerca']"
-    else:
-        search_box_xpath = "//input[@placeholder='Search']"
+def search_hashtag(browser, hash_str_='#photooftheday'):
+    search_box_xpath = "//input[@placeholder='Search']"
     search_box = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.XPATH, search_box_xpath)))
     search_box.send_keys(hash_str_)
     time.sleep(2)
