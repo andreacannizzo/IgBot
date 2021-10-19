@@ -7,9 +7,9 @@
 
 #aggiunti da me:
 .idea
-### venv
+venv
 Selenium
-### WorkingFiles
+WorkingFiles
 LogFiles
 .DS_Store
 inputs.py

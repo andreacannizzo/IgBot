@@ -40,7 +40,10 @@ total_liked = 0
 for hash_i in hash_str:
 
     # print(f"searching for {hash_i} posts")
-    search_hashtag(browser, hash_i)
+    browser.execute_script("window.open('');")
+    browser.switch_to.window(browser.window_handles[1])
+    browser.get("https://www.instagram.com/explore/tags/"+hash_i)
+    # search_hashtag(browser, hash_i)
     click_first_pic(browser, first_recent, second_recent, third_recent)
 
     # create other session and utility variables
@@ -99,6 +102,9 @@ for hash_i in hash_str:
     total_aim_of_likes += target_of_likes
     total_viewed_posts += total
     total_liked += liked
+
+    browser.close()
+    browser.switch_to.window(browser.window_handles[0])
 
 # saves time when finishes session and display global outcome
 time_elapsed = datetime.now() - start_timer

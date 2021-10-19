@@ -26,7 +26,9 @@ def launch_browser(path_to_chromedriver, images=True):
         #2del browser.get('https://www.instagram.com/')
     else:
         # create browser with images
-        browser = webdriver.Chrome(path_to_chromedriver)
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_experimental_option("prefs", {"intl.accept_languages": 'en,en_US'})
+        browser = webdriver.Chrome(path_to_chromedriver, options=chrome_options)
         #2del browser.get('https://www.instagram.com/')
     return browser
 
