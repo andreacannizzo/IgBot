@@ -17,7 +17,8 @@ f = open(file_name, "w")
 f.close()
 
 # auto download latest chromedriver if mac then open a browser and get its handle
-# chromedriver_autoinstaller.install() TODO fix the chromedriver_autoinstaller for Rasp
+# TODO fix the chromedriver_autoinstaller for Rasp
+auto_chromedriver = chromedriver_autoinstaller.install()
 browser = launch_browser(auto_chromedriver, False)
 # go to instagram
 browser.get('https://www.instagram.com/')
@@ -71,7 +72,7 @@ for hash_i in hash_str:
             # result_of_LIIO = 1 if liked successfully, 0 if not liked because already liked
             # get current URL (of post) string
             # browser.current_url
-            result_of_LIIO = like_if_its_ok(browser, liked, like_xpath)
+            result_of_LIIO = like_if_its_ok(browser, like_xpath)
             # if liked than append entry in Log file
             # if result_of_LIIO:
             #    append_entry(browser, account_handle(browser, handle_xpath))

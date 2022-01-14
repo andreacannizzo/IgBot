@@ -109,7 +109,7 @@ def click_first_pic(browser, first_rec, second_rec, third_rec):
                 print(f'post in {third_rec} not found')
 
 
-def like_if_its_ok(browser, number, like_xpath):
+def like_if_its_ok(browser, like_xpath):
     like = WebDriverWait(browser, 5).until(
         EC.visibility_of_element_located((By.XPATH, like_xpath)))
     color = like.get_property("innerHTML")
