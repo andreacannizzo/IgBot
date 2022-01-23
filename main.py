@@ -22,14 +22,11 @@ auto_chromedriver = chromedriver_autoinstaller.install()
 browser = launch_browser(auto_chromedriver, False)
 # go to instagram
 browser.get('https://www.instagram.com/')
-# accept cookies 1
-avoid_popup(browser, "Accept All")
-# log in with accounts credentials
-login(browser, username_str, password_str)
-# accept cookies 2
-# cookies_accept(browser, 'Consenti tutti i cookie')
-# avoid 'save credentials' popup and then 'notifications' popup, the same function works for both
-avoid_popup(browser, "Not Now")
+# load cookies (with credentials inside)
+load_cookie(browser)
+# reload page already logged in thanks to cookies
+browser.get('https://www.instagram.com/')
+# turn off notifications pop up
 avoid_popup(browser, "Not Now")
 
 # create session history variables

@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
+import pickle
 from pickle import dump
 import time
 import random
@@ -35,12 +36,7 @@ def launch_browser(path_to_chromedriver, images=True):
 
 def avoid_popup(browser, text_of_button):
     browser.implicitly_wait(10)
-    if text_of_button == "Accept All":
-        browser.find_element_by_xpath("//button[text()='Accept All']").click()
-    if text_of_button == "Not Now":
-        browser.find_element_by_xpath("//button[text()='Not Now']").click()
-    if text_of_button == "Report a problem":
-        browser.find_element_by_xpath("//button[text()='Report a Problem']").click()
+    browser.find_element_by_xpath("//button[text()='" + text_of_button + "']").click()
 
 
 # logs in with account credentials specified in inputs.py file
@@ -54,6 +50,20 @@ def login(browser, username_str, password_str):
     # confirm
     submit = browser.find_element_by_tag_name('form')
     submit.submit()
+
+
+def save_cookie(browser):
+    path = "WorkingFiles/cookies_file"
+    with open(path, 'wb') as filehandler:
+        pickle.dump(browser.get_cookies(), filehandler)
+
+
+def load_cookie(browser):
+    path = "WorkingFiles/cookies_file"
+    with open(path, 'rb') as cookiesfile:
+        cookies = pickle.load(cookiesfile)
+        for cookie in cookies:
+            browser.add_cookie(cookie)
 
 
 # insert hashtag in search bar and double press enter
