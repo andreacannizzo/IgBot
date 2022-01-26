@@ -8,13 +8,10 @@
 #aggiunti da me:
 .idea
 venv
-Selenium
 WorkingFiles
-LogFiles
+Clients_Files
 .DS_Store
 inputs.py
-temp.py
-LogFilesPickle
 __pycache__/
 
 # User-specific stuff

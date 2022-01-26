@@ -1,86 +1,51 @@
 from selenium.common.exceptions import TimeoutException
 from inputs import *
 from definitions import *
-import sys
-import time
-from datetime import datetime
 import chromedriver_autoinstaller
+import os
 
-# save log files and time informations
-original_stdout = sys.stdout
-start_time = time.strftime("%Y_%m_%d-%H_%M_%S")
-start_timer = datetime.now()
-
-# Open a new Log file in a directory (relative directory so it does not change between Rasp and Mac)
-file_name = "LogFiles/" + start_time + ".txt"
-f = open(file_name, "w")
-f.close()
 
 # auto download latest chromedriver if mac then open a browser and get its handle
 # TODO fix the chromedriver_autoinstaller for Rasp
 auto_chromedriver = chromedriver_autoinstaller.install()
 browser = launch_browser(auto_chromedriver, False)
-# go to instagram
-browser.get('https://www.instagram.com/')
-# load cookies (with credentials inside)
-load_cookie(browser)
-# reload page already logged in thanks to cookies
-browser.get('https://www.instagram.com/')
-# turn off notifications pop up
-avoid_popup(browser, "Not Now")
 
-# create session history variables
-total_aim_of_likes = 0
-total_viewed_posts = 0
-total_liked = 0
+if os.path.exists("Clients_Files/" + username_str + "/cookies_file"):
+    LOAD_cookie(browser, username_str)
+else:
+    SAVE_cookies(browser, username_str, password_str)
 
-# starts session
+# work parameters
+target_of_likes = 30
+max_tryings = 5
+max_skip = 18
+
 for hash_i in hash_str:
 
-    # print(f"searching for {hash_i} posts")
     browser.execute_script("window.open('');")
     browser.switch_to.window(browser.window_handles[1])
     browser.get("https://www.instagram.com/explore/tags/"+hash_i)
-    # search_hashtag(browser, hash_i)
-    click_first_pic(browser, first_recent, second_recent, third_recent)
-
-    # create other session and utility variables
-    # tryings = number of times IgBot skips to a new post if the previous isn't active
-    # skip = counter of how many times in a row there are already-liked posts
+    click_first_pic(browser)
     liked = 0
-    total = 0
-    tryings = 0
-    result_of_LIIO = 0
+    like_result = 0
     skip = 0
-
-    # starting from the most recent post there is no need to change the xpath of the 'next_post' bc they are all equal
+    tryings = 0
     while (liked < target_of_likes) and (skip < max_skip):
         try:
             # If there is a restriction of actions IgBot detects it and stops
             try:
+                # TODO substitute right english version
                 browser.find_element_by_xpath("//button[text()='Segnala un problema']").click()
-                print("Instagram ha bloccato l'attività")
+                print("Instagram detected weird actions")
                 browser.close()
                 exit()
             except:
                 pass
-            # get account's handle of current post viewed (works but not useful now)
-            # ig_handle_str = account_handle(browser, handle_xpath)
-            # result_of_LIIO = 1 if liked successfully, 0 if not liked because already liked
-            # get current URL (of post) string
-            # browser.current_url
-            result_of_LIIO = like_if_its_ok(browser, like_xpath)
-            # if liked than append entry in Log file
-            # if result_of_LIIO:
-            #    append_entry(browser, account_handle(browser, handle_xpath))
-            # update liked session variable
-            liked += result_of_LIIO
-            # go to next post
-            browser.find_element_by_xpath(next_path).click()
-            # whether it was a like or not the total amount of posts viewed increases by one
-            total += 1
-            # if it's been a like than the counter of already-liked posts is reset to 0
-            if result_of_LIIO == 1:
+            like_result = like_it(browser)
+            liked += like_result
+            next(browser)
+            if like_result == 1:
+                add_like(browser, hash_i, username_str)
                 skip = 0
             else:
                 skip += 1
@@ -90,31 +55,13 @@ for hash_i in hash_str:
                 browser.close()
                 exit()
             # when post doesn't load IgBot tries to skip to the next one max_tryings times
-            skip_to_next_one(browser, next_path)
+            next(browser)
             tryings += 1
-
-    # display local outcome
-    with open(file_name, 'a') as f:
-        sys.stdout = f
-        print(f"- {hash_i} posts, target of likes = {target_of_likes}, likes = {liked}, total viewed = {total}")
-    total_aim_of_likes += target_of_likes
-    total_viewed_posts += total
-    total_liked += liked
 
     browser.close()
     browser.switch_to.window(browser.window_handles[0])
 
-# saves time when finishes session and display global outcome
-time_elapsed = datetime.now() - start_timer
-with open(file_name, 'a') as f:
-    sys.stdout = f
-    print(f"total target = {total_aim_of_likes}, total viewed = {total_viewed_posts}, total liked = {total_liked}")
-    print(f"total time (hh:mm:ss) = {format(time_elapsed)}")
-
-# displays outcome in python console
-sys.stdout = original_stdout
-with open(file_name, 'r') as f:
-    print(f.read())
 
 # close browser and exit
 browser.close()
+exit()
