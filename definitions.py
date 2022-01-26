@@ -14,13 +14,15 @@ import pickle
 from inputs import *
 
 
-def launch_browser(path_to_chromedriver, images=True):
+def launch_browser(path_to_chromedriver, images=True, headless=True):
     chrome_options = webdriver.ChromeOptions()
     if images:
         chrome_options.add_experimental_option("prefs", {"intl.accept_languages": 'en,en_US'})
     else:
         chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2,
                                                          'intl.accept_languages': 'en,en_US'})
+    if headless:
+        chrome_options.add_argument("--headless")
     browser = webdriver.Chrome(path_to_chromedriver, options=chrome_options)
     return browser
 
@@ -55,7 +57,6 @@ def SAVE_cookies(browser, username_str, password_str):
     login(browser, username_str, password_str)
     avoid_popup(browser, "Save Info")
     time.sleep(3)
-    avoid_popup(browser, "Not Now")
     save_cookie(browser, username_str)
 
 
@@ -73,7 +74,6 @@ def LOAD_cookie(browser, username_str):
     load_cookie(browser, username_str)
     browser.get('https://www.instagram.com/')
     time.sleep(3)
-    avoid_popup(browser, "Not Now")
 
 
 def click_first_pic(browser):
