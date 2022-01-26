@@ -5,11 +5,13 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from datetime import datetime
 import pandas as pd
 import time
 import random
 import pickle
+from inputs import *
 
 
 def launch_browser(path_to_chromedriver, images=True):
@@ -56,6 +58,7 @@ def SAVE_cookies(browser, username_str, password_str):
     avoid_popup(browser, "Not Now")
     save_cookie(browser, username_str)
 
+
 def load_cookie(browser, username_str):
     path = "Clients_Files/" + username_str + "/cookies_file"
     with open(path, 'rb') as cookiesfile:
@@ -94,6 +97,48 @@ def like_it(browser):
     else:
         time.sleep(random.uniform(2, 4))
         return 0
+
+
+def put_likes(browser):
+    target_of_likes = 30
+    max_tryings = 5
+    max_skip = 18
+    for hash_i in hash_str:
+        browser.execute_script("window.open('');")
+        browser.switch_to.window(browser.window_handles[1])
+        browser.get("https://www.instagram.com/explore/tags/" + hash_i)
+        click_first_pic(browser)
+        liked = 0
+        like_result = 0
+        skip = 0
+        tryings = 0
+        while (liked < target_of_likes) and (skip < max_skip):
+            try:
+                try:
+                    # If there is a restriction of actions IgBot detects it and stops
+                    if browser.find_element_by_xpath("//button[text()='Report a problem']") != 0:
+                        browser.find_element_by_xpath("//button[text()='Report a problem']").click()
+                        print("Instagram detected a problem")
+                    return
+                except:
+                    pass
+                like_result = like_it(browser)
+                liked += like_result
+                if like_result == 1:
+                    add_like(browser, hash_i, username_str)
+                    skip = 0
+                else:
+                    skip += 1
+                next(browser)
+            except TimeoutException:
+                if tryings == max_tryings:
+                    print(f'Images did not load after {max_tryings} attempts')
+                    browser.close()
+                # when post doesn't load IgBot tries to skip to the next one max_tryings times
+                next(browser)
+                tryings += 1
+        browser.close()
+        browser.switch_to.window(browser.window_handles[0])
 
 
 def next(browser):
