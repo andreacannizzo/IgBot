@@ -53,8 +53,10 @@ def save_cookie(browser, username_str):
 
 def SAVE_cookies(browser, username_str, password_str):
     browser.get('https://www.instagram.com/')
-    avoid_popup(browser, "Accept All")
+    avoid_popup(browser, "Allow essential and optional cookies")
+    time.sleep(5)
     login(browser, username_str, password_str)
+    time.sleep(5)
     avoid_popup(browser, "Save Info")
     time.sleep(3)
     save_cookie(browser, username_str)
@@ -78,7 +80,8 @@ def LOAD_cookie(browser, username_str):
 
 def click_first_pic(browser):
     time.sleep(2)
-    first_rec = "//*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]"
+    # first_rec = "//*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]"
+    first_rec = "//*[@id='react-root']/div/div/section/main/article/div[1]/div/div/div[1]/div[1]/a/div"
     first_image = WebDriverWait(browser, 10).until(
         EC.visibility_of_element_located((By.XPATH, first_rec)))
     first_image.click()
@@ -125,7 +128,7 @@ def put_likes(browser):
                 like_result = like_it(browser)
                 liked += like_result
                 if like_result == 1:
-                    add_like(browser, hash_i, username_str)
+                    # add_like(browser, hash_i, username_str)
                     skip = 0
                 else:
                     skip += 1
