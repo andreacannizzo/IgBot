@@ -9,7 +9,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 # auto download latest chromedriver if mac then open a browser and get its handle
 # TODO fix the chromedriver_autoinstaller for Rasp
 auto_chromedriver = chromedriver_autoinstaller.install()
-browser = launch_browser(auto_chromedriver, False, False)
+browser = launch_browser(auto_chromedriver, False, True)
 
 if os.path.exists("Clients_Files/" + username_str + "/cookies_file"):
     LOAD_cookie(browser, username_str)

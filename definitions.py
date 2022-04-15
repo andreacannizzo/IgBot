@@ -80,8 +80,7 @@ def LOAD_cookie(browser, username_str):
 
 def click_first_pic(browser):
     time.sleep(2)
-    # first_rec = "//*[@id='react-root']/section/main/article/div[1]/div/div/div[1]/div[1]"
-    first_rec = "//*[@id='react-root']/div/div/section/main/article/div[1]/div/div/div[1]/div[1]/a/div"
+    first_rec = "//*[@id='react-root']/div/div/section/main/article/div[1]/div/div/div[1]/div[1]/a/div[1]"
     first_image = WebDriverWait(browser, 10).until(
         EC.visibility_of_element_located((By.XPATH, first_rec)))
     first_image.click()
@@ -128,7 +127,7 @@ def put_likes(browser):
                 like_result = like_it(browser)
                 liked += like_result
                 if like_result == 1:
-                    # add_like(browser, hash_i, username_str)
+                    add_like(browser, hash_i, username_str)
                     skip = 0
                 else:
                     skip += 1
@@ -152,8 +151,8 @@ def next(browser):
 
 # Returns string containing account's handle of current viewed post
 def account_handle(browser):
-    handle_xpath = "/html/body/div[6]/div[3]/div/article/div/div[2]/div/" \
-                   "div/div[1]/div/header/div[2]/div[1]/div[1]/span/a"
+    handle_xpath = "/html/body/div[6]/div[3]/div/article/div/div[2]/div/"\
+                   "div/div[1]/div/header/div[2]/div[1]/div[1]/div/span/a"
     handle_handle = WebDriverWait(browser, 1).until(
         EC.visibility_of_element_located((By.XPATH, handle_xpath)))
     return handle_handle.text
