@@ -23,6 +23,7 @@ def launch_browser(path_to_chromedriver, images=True, headless=True):
                                                          'intl.accept_languages': 'en,en_US'})
     if headless:
         chrome_options.add_argument("--headless")
+        chrome_options.add_argument("window-size=1000,700")
     browser = webdriver.Chrome(path_to_chromedriver, options=chrome_options)
     return browser
 
@@ -80,9 +81,8 @@ def LOAD_cookie(browser, username_str):
 
 def click_first_pic(browser):
     time.sleep(2)
-    first_rec = "//*[@id='react-root']/div/div/section/main/article/div[1]/div/div/div[1]/div[1]/a/div[1]"
     first_image = WebDriverWait(browser, 10).until(
-        EC.visibility_of_element_located((By.XPATH, first_rec)))
+        EC.visibility_of_element_located((By.CLASS_NAME, "eLAPa")))
     first_image.click()
 
 
@@ -102,9 +102,9 @@ def like_it(browser):
 
 
 def put_likes(browser):
-    target_of_likes = 30
+    target_of_likes = 50
     max_tryings = 5
-    max_skip = 18
+    max_skip = 25
     for hash_i in hash_str:
         browser.execute_script("window.open('');")
         browser.switch_to.window(browser.window_handles[1])
