@@ -46,8 +46,11 @@ def login(browser, username_str, password_str):
 
 
 def save_cookie(browser, username_str):
-    os.makedirs("Clients_Files/" + username_str)
-    path = "Clients_Files/" + username_str + "/cookies_file"
+    if os.path.exists("Clients_Files/" + username_str):
+        path = "Clients_Files/" + username_str + "/cookies_file"
+    else:
+        os.makedirs("Clients_Files/" + username_str)
+        path = "Clients_Files/" + username_str + "/cookies_file"
     with open(path, 'wb') as filehandler:
         pickle.dump(browser.get_cookies(), filehandler)
 
