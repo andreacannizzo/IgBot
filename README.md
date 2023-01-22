@@ -1,19 +1,28 @@
+
 # IgBot
-A simple bot to like posts and gain followers on Instagram
+A simple bot to like posts and gain followers on Instagram.
 
-### Updates:
-- Soon I'll release the english browser version
+## Installation
+- clone the repository
+- inside the IgBot directory, install requirements
+```bash
+pip install -r requirements.txt
+```
+- change the inputs_template.py file accordingly and rename it to inputs.py
 
-### Installation:
+## Usage
+- run main.py file
+```bash
+python3 main.py
+```
 
-1. add Selenium package in the Python interpreter of the project
-2. in order to be able to use `launch_browser(path_to_chromedriver, False)`, thus prohibiting the webdriver to load any image, go to 
-   ```sh
-   http://chrome-extension-downloader.com/
-   ```
-   search the following URL
-   ```sh
-   https://chrome.google.com/webstore/detail/block-image/pehaalcefcjfccdpbckoablngfkfgfgj
-   ```
-   download and install the extension.
-3. create an inputs.py file in the root directory as specified in main.py
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
