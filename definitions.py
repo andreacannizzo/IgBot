@@ -29,19 +29,21 @@ def launch_browser(path_to_chromedriver, images=True, headless=True):
 
 
 def avoid_popup(browser, text_of_button):
-    browser.implicitly_wait(5)
-    browser.find_element_by_xpath("//button[text()='" + text_of_button + "']").click()
+    # browser.implicitly_wait(5)
+    # browser.find_element_by_xpath("//button[text()='" + text_of_button + "']").click()
+    WebDriverWait(browser, 5).until(
+        EC.visibility_of_element_located((By.XPATH, "//button[text()='" + text_of_button + "']"))).click()
 
 
 def login(browser, username_str, password_str):
-    username = browser.find_element_by_name('username')
+    username = browser.find_element(By.NAME, 'username')
     username.clear()
     username.send_keys(username_str)
-    password = browser.find_element_by_name('password')
+    password = browser.find_element(By.NAME, 'password')
     password.clear()
     password.send_keys(password_str)
     # confirm
-    submit = browser.find_element_by_tag_name('form')
+    submit = browser.find_element(By.TAG_NAME, "form")
     submit.submit()
 
 
@@ -85,14 +87,14 @@ def LOAD_cookie(browser, username_str):
 def click_first_pic(browser):
     time.sleep(2)
     first_image = WebDriverWait(browser, 10).until(
-        EC.visibility_of_element_located((By.CLASS_NAME, "eLAPa")))
+        EC.visibility_of_element_located((By.CLASS_NAME, "_aagw")))
+
     first_image.click()
 
 
 def like_it(browser):
-    like_xpath = "/html/body/div[6]/div[3]/div/article/div/div[2]/div/div/div[2]/section[1]/span[1]/button"
     like = WebDriverWait(browser, 5).until(
-        EC.visibility_of_element_located((By.XPATH, like_xpath)))
+        EC.visibility_of_element_located((By.CLASS_NAME, "_aamw")))
     color = like.get_property("innerHTML")
     if "#8e8e8e" in color:
         time.sleep(random.uniform(2, 4))
@@ -105,7 +107,7 @@ def like_it(browser):
 
 
 def put_likes(browser):
-    target_of_likes = 50
+    target_of_likes = 5 # 50
     max_tryings = 5
     max_skip = 15
     for hash_i in hash_str:
@@ -121,8 +123,10 @@ def put_likes(browser):
             try:
                 try:
                     # If there is a restriction of actions IgBot detects it and stops
-                    if browser.find_element_by_xpath("//button[text()='Report a problem']") != 0:
-                        browser.find_element_by_xpath("//button[text()='Report a problem']").click()
+                    if WebDriverWait(browser, 5).until(
+                            EC.visibility_of_element_located((By.XPATH, "//button[text()='Report a problem']"))) != 0:
+                        WebDriverWait(browser, 5).until(
+                            EC.visibility_of_element_located((By.XPATH, "//button[text()='Report a problem']"))).click()
                         print("Instagram detected a problem")
                     return
                 except:
@@ -132,8 +136,10 @@ def put_likes(browser):
                 if like_result == 1:
                     add_like(browser, hash_i, username_str)
                     skip = 0
+                    tryings = 0
                 else:
                     skip += 1
+                    tryings = 0
                 next(browser)
             except TimeoutException:
                 if tryings == max_tryings:
@@ -150,12 +156,16 @@ def next(browser):
     next_path = "//*[@aria-label='Next']"
     WebDriverWait(browser, 1).until(
         EC.visibility_of_element_located((By.XPATH, next_path))).click()
+    # class name al 2023_01_22 '_ab6-'
 
 
 # Returns string containing account's handle of current viewed post
 def account_handle(browser):
-    handle_xpath = "/html/body/div[6]/div[3]/div/article/div/div[2]/div/"\
-                   "div/div[1]/div/header/div[2]/div[1]/div[1]/div/span/a"
+
+    handle_xpath = "/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div/div[3]" \
+                   "/div/div/div/div/div[2]/div/article/div/div[2]/div/div/div[1]/div/" \
+                   "header/div[2]/div[1]/div[1]/div/div/div/span/a"
+
     handle_handle = WebDriverWait(browser, 1).until(
         EC.visibility_of_element_located((By.XPATH, handle_xpath)))
     return handle_handle.text
