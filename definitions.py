@@ -161,13 +161,10 @@ def next(browser):
 # Returns string containing account's handle of current viewed post
 def account_handle(browser):
 
-    handle_xpath = "/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div/div[3]" \
-                   "/div/div/div/div/div[2]/div/article/div/div[2]/div/div/div[1]/div/" \
-                   "header/div[2]/div[1]/div[1]/div/div/div/span/a"
-
     handle_handle = WebDriverWait(browser, 1).until(
-        EC.visibility_of_element_located((By.XPATH, handle_xpath)))
-    return handle_handle.text
+        EC.visibility_of_all_elements_located((By.XPATH, "//*[@class='_aap6 _aap7 _aap8']")))
+
+    return handle_handle[0].text
 
 
 # Insert new line in Log file (da finire)
