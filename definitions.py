@@ -106,10 +106,9 @@ def like_it(browser):
         return 0
 
 
-def put_likes(browser):
-    target_of_likes = 5 # 50
+def put_likes(browser, target_of_likes):
     max_tryings = 5
-    max_skip = 15
+    max_skip = 10
     for hash_i in hash_str:
         browser.execute_script("window.open('');")
         browser.switch_to.window(browser.window_handles[1])
