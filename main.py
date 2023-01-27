@@ -41,6 +41,7 @@ def options(argv):
     else:
         SAVE_cookies(browser, username_str, password_str)
 
+    avoid_popup(browser, "Not Now")
     put_likes(browser, arg_likes)
 
     # close browser and exit

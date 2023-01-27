@@ -29,10 +29,11 @@ def launch_browser(path_to_chromedriver, images=True, headless=True):
 
 
 def avoid_popup(browser, text_of_button):
-    # browser.implicitly_wait(5)
-    # browser.find_element_by_xpath("//button[text()='" + text_of_button + "']").click()
-    WebDriverWait(browser, 5).until(
-        EC.visibility_of_element_located((By.XPATH, "//button[text()='" + text_of_button + "']"))).click()
+    try:
+        WebDriverWait(browser, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//button[text()='" + text_of_button + "']"))).click()
+    except:
+        print("There's no popup with a <" + text_of_button + "> button")
 
 
 def login(browser, username_str, password_str):
@@ -86,24 +87,32 @@ def LOAD_cookie(browser, username_str):
 
 def click_first_pic(browser):
     time.sleep(2)
-    first_image = WebDriverWait(browser, 10).until(
-        EC.visibility_of_element_located((By.CLASS_NAME, "_aagw")))
-
-    first_image.click()
+    try:
+        WebDriverWait(browser, 10).until(
+            EC.visibility_of_element_located((By.CLASS_NAME, "_aagw"))).click()
+    except:
+        print("Problem with first pic clicking")
+        browser.close()
+        exit()
 
 
 def like_it(browser):
-    like = WebDriverWait(browser, 5).until(
-        EC.visibility_of_element_located((By.CLASS_NAME, "_aamw")))
-    color = like.get_property("innerHTML")
-    if "#8e8e8e" in color:
-        time.sleep(random.uniform(2, 4))
-        like.click()
-        time.sleep(random.uniform(2, 4))
-        return 1
-    else:
-        time.sleep(random.uniform(2, 4))
-        return 0
+    try:
+        like = WebDriverWait(browser, 5).until(
+            EC.visibility_of_element_located((By.CLASS_NAME, "_aamw")))
+        color = like.get_property("innerHTML")
+        if "#8e8e8e" in color:
+            time.sleep(random.uniform(2, 4))
+            like.click()
+            time.sleep(random.uniform(2, 4))
+            return 1
+        else:
+            time.sleep(random.uniform(2, 4))
+            return 0
+    except:
+        print("Problem with liking")
+        browser.close()
+        exit()
 
 
 def put_likes(browser, target_of_likes):
@@ -144,6 +153,7 @@ def put_likes(browser, target_of_likes):
                 if tryings == max_tryings:
                     print(f'Images did not load after {max_tryings} attempts')
                     browser.close()
+                    exit()
                 # when post doesn't load IgBot tries to skip to the next one max_tryings times
                 next(browser)
                 tryings += 1
