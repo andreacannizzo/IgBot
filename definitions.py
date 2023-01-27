@@ -179,10 +179,13 @@ def account_handle(browser):
 
 # Insert new line in Log file (da finire)
 def add_like(browser, hashtag, username_str):
-    line = pd.DataFrame({"Time": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
-                         "Tag": [hashtag],
-                         "URL": [browser.current_url.split(".com")[1]],
-                         "Sender": [username_str],
-                         "Recipient": [account_handle(browser)]})
-    csv_name = "Clients_Files/" + username_str + "/" + username_str + ".csv"
-    line.to_csv(csv_name, index=False, header=False, mode='a')
+    try:
+        line = pd.DataFrame({"Time": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
+                             "Tag": [hashtag],
+                             "URL": [browser.current_url.split(".com")[1]],
+                             "Sender": [username_str],
+                             "Recipient": [account_handle(browser)]})
+        csv_name = "Clients_Files/" + username_str + "/" + username_str + ".csv"
+        line.to_csv(csv_name, index=False, header=False, mode='a')
+    except:
+        print("Problem with adding like on cvs")
