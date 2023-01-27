@@ -1,20 +1,20 @@
-
 # IgBot
-A simple bot to like posts and gain followers on Instagram.
+A simple bot to |!ke p()$t$ and g4!n f()||oW3R$ on !n$t@9r4m.
 
 ## Installation
-- clone the repository
-- inside the IgBot directory, install requirements
+- clone the repository (and create a [venv](https://towardsdatascience.com/getting-started-with-python-virtual-environments-252a6bd2240))
+- install requirements
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 - change the inputs_template.py file accordingly and rename it to inputs.py
 
 ## Usage
-- run main.py file
+run main.py specifying the aim number of likes per each hashtag `-l` and whether you want or not to display the working browser `-b` (`True` for headless browser, `False` otherwise), *e.g.*
 ```bash
-python3 main.py
+$ python3 main.py -l 50 -b True
 ```
+for 50 likes for each hashtag and without displaying the browser.
 
 ### Disclaimer
 
@@ -27,6 +27,10 @@ to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
+## Authors
+
+- [@occhiodelloshinigami](https://www.github.com/occhiodelloshinigami) a.k.a. Andrea C.
+
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
