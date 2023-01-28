@@ -1,5 +1,7 @@
 # set DISPLAY to 'remote' one
 import os
+import sys
+
 os.environ["DISPLAY"] = ":0"
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -118,15 +120,17 @@ def like_it(browser):
 def put_likes(browser, target_of_likes):
     max_tryings = 5
     max_skip = 10
+    bar_size = 50
     for hash_i in hash_str:
         browser.execute_script("window.open('');")
         browser.switch_to.window(browser.window_handles[1])
         browser.get("https://www.instagram.com/explore/tags/" + hash_i)
         click_first_pic(browser)
         liked = 0
-        like_result = 0
         skip = 0
         tryings = 0
+        sys.stdout.write('\r' + hash_i + ": [" + "." * bar_size + "] " + str(liked) + "/" + str(target_of_likes))
+        sys.stdout.flush()
         while (liked < target_of_likes) and (skip < max_skip):
             try:
                 try:
@@ -143,6 +147,10 @@ def put_likes(browser, target_of_likes):
                 liked += like_result
                 if like_result == 1:
                     add_like(browser, hash_i, username_str)
+                    x = int(bar_size * liked / target_of_likes)
+                    sys.stdout.write('\r' + hash_i + ": [" + "#" * x + "." * (bar_size - x) + "] "
+                                     + str(liked) + "/" + str(target_of_likes))
+                    sys.stdout.flush()
                     skip = 0
                     tryings = 0
                 else:
@@ -159,6 +167,7 @@ def put_likes(browser, target_of_likes):
                 tryings += 1
         browser.close()
         browser.switch_to.window(browser.window_handles[0])
+        print("", flush=True)
 
 
 def next(browser):
