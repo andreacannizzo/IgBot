@@ -129,7 +129,7 @@ def put_likes(browser, target_of_likes):
         liked = 0
         skip = 0
         tryings = 0
-        sys.stdout.write('\r' + hash_i + ": [" + "." * bar_size + "] " + str(liked) + "/" + str(target_of_likes))
+        sys.stdout.write('\r' + "-> [" + "." * bar_size + "] " + hash_i + " " + str(liked) + "/" + str(target_of_likes))
         sys.stdout.flush()
         while (liked < target_of_likes) and (skip < max_skip):
             try:
@@ -148,7 +148,7 @@ def put_likes(browser, target_of_likes):
                 if like_result == 1:
                     add_like(browser, hash_i, username_str)
                     x = int(bar_size * liked / target_of_likes)
-                    sys.stdout.write('\r' + hash_i + ": [" + "#" * x + "." * (bar_size - x) + "] "
+                    sys.stdout.write('\r' + "-> [" + "#" * x + "." * (bar_size - x) + "] " + hash_i + " "
                                      + str(liked) + "/" + str(target_of_likes))
                     sys.stdout.flush()
                     skip = 0
@@ -174,19 +174,17 @@ def next(browser):
     next_path = "//*[@aria-label='Next']"
     WebDriverWait(browser, 1).until(
         EC.visibility_of_element_located((By.XPATH, next_path))).click()
-    # class name al 2023_01_22 '_ab6-'
 
 
 # Returns string containing account's handle of current viewed post
 def account_handle(browser):
-
     handle_handle = WebDriverWait(browser, 1).until(
         EC.visibility_of_all_elements_located((By.XPATH, "//*[@class='_aap6 _aap7 _aap8']")))
 
     return handle_handle[0].text
 
 
-# Insert new line in Log file (da finire)
+# Insert new line in Log file
 def add_like(browser, hashtag, username_str):
     try:
         line = pd.DataFrame({"Time": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],

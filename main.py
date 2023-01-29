@@ -8,7 +8,7 @@ import getopt
 
 
 def options(argv):
-    arg_likes = 2
+    arg_likes = 5
     arg_boolean = False
     arg_help = "{0} -l <likes> -b <boolean>".format(argv[0])
 
