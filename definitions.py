@@ -31,6 +31,7 @@ def launch_browser(path_to_chromedriver, images=True, headless=True):
 
 
 def avoid_popup(browser, text_of_button):
+    time.sleep(1)
     try:
         WebDriverWait(browser, 5).until(
             EC.visibility_of_element_located((By.XPATH, "//button[text()='" + text_of_button + "']"))).click()
@@ -103,7 +104,7 @@ def like_it(browser):
         like = WebDriverWait(browser, 5).until(
             EC.visibility_of_element_located((By.CLASS_NAME, "_aamw")))
         color = like.get_property("innerHTML")
-        if "#8e8e8e" in color:
+        if "rgb(142, 142, 142)" in color:
             time.sleep(random.uniform(2, 4))
             like.click()
             time.sleep(random.uniform(2, 4))
