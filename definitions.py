@@ -179,8 +179,9 @@ def next(browser):
 
 # Returns string containing account's handle of current viewed post
 def account_handle(browser):
+    # _acao _acat _acaw
     handle_handle = WebDriverWait(browser, 1).until(
-        EC.visibility_of_all_elements_located((By.XPATH, "//*[@class='_aap6 _aap7 _aap8']")))
+        EC.visibility_of_all_elements_located((By.XPATH, "//*[@class='_aacl _aaco _aacw _aacx _aad6 _aade']")))
 
     return handle_handle[0].text
 
