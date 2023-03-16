@@ -8,7 +8,7 @@ import getopt
 
 
 def options(argv):
-    arg_likes = 5
+    arg_likes = 2
     arg_boolean = False
     arg_help = "{0} -l <likes> -b <boolean>".format(argv[0])
 
@@ -40,6 +40,7 @@ def options(argv):
         LOAD_cookie(browser, username_str)
     else:
         SAVE_cookies(browser, username_str, password_str)
+        input("Press Enter when access authenticated...")
 
     avoid_popup(browser, "Not Now")
     put_likes(browser, arg_likes)
