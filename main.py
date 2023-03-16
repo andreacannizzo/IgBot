@@ -1,5 +1,4 @@
 from definitions import *
-from inputs import *
 import chromedriver_autoinstaller
 import os
 import ssl
@@ -10,10 +9,10 @@ import getopt
 def options(argv):
     arg_likes = 2
     arg_boolean = False
-    arg_help = "{0} -l <likes> -b <boolean>".format(argv[0])
+    arg_help = "{0} -u <username> -l <likes> -b <boolean>".format(argv[0])
 
     try:
-        opts, args = getopt.getopt(argv[1:], "hl:b:", ["help", "likes=", "boolean="])
+        opts, args = getopt.getopt(argv[1:], "hu:l:b:", ["help", "username=", "likes=", "boolean="])
     except:
         print(arg_help)
         sys.exit(2)
@@ -22,6 +21,8 @@ def options(argv):
         if opt in ("-h", "--help"):
             print(arg_help)  # print the help message
             sys.exit(2)
+        elif opt in ("-u", "--username"):
+            arg_user = arg
         elif opt in ("-l", "--likes"):
             arg_likes = int(arg)
         elif opt in ("-b", "--boolean"):
@@ -36,14 +37,22 @@ def options(argv):
     auto_chromedriver = chromedriver_autoinstaller.install()
     browser = launch_browser(auto_chromedriver, False, arg_boolean)
 
-    if os.path.exists("Clients_Files/" + username_str + "/cookies_file"):
-        LOAD_cookie(browser, username_str)
+    if os.path.exists("Clients_Files/" + arg_user + "/cookies_file"):
+        LOAD_cookie(browser, arg_user)
     else:
-        SAVE_cookies(browser, username_str, password_str)
+        input_password = input("Enter the password: ")
+        inputs_hashtags = []
+        while True:
+            inp = input("Enter a valid hashtag without the # prefix / Press Enter when finished: ")
+            if inp == "":
+                break
+            inputs_hashtags.append(inp)
+        SAVE_cookies(browser, arg_user, input_password)
+        SAVE_hashtags(arg_user, inputs_hashtags)
         input("Press Enter when access authenticated...")
 
     avoid_popup(browser, "Not Now")
-    put_likes(browser, arg_likes)
+    put_likes(browser, arg_user, arg_likes)
 
     # close browser and exit
     browser.close()

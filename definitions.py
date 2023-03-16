@@ -13,7 +13,7 @@ import pandas as pd
 import time
 import random
 import pickle
-from inputs import *
+# from inputs import *
 
 
 def launch_browser(path_to_chromedriver, images=True, headless=True):
@@ -72,6 +72,16 @@ def SAVE_cookies(browser, username_str, password_str):
     save_cookie(browser, username_str)
 
 
+def SAVE_hashtags(user, hashtags_list):
+    if os.path.exists("Clients_Files/" + user):
+        path = "Clients_Files/" + user + "/input_files"
+    else:
+        os.makedirs("Clients_Files/" + user)
+        path = "Clients_Files/" + user + "/input_files"
+    with open(path, 'wb') as fp:
+        pickle.dump(hashtags_list, fp)
+
+
 def load_cookie(browser, username_str):
     path = "Clients_Files/" + username_str + "/cookies_file"
     with open(path, 'rb') as cookiesfile:
@@ -118,10 +128,14 @@ def like_it(browser):
         exit()
 
 
-def put_likes(browser, target_of_likes):
+def put_likes(browser, arg_user, target_of_likes):
     max_tryings = 5
     max_skip = 10
     bar_size = 50
+    # read hashtags from input_files
+    path = "Clients_Files/" + arg_user + "/input_files"
+    with open(path, "rb") as fp:
+        hash_str = pickle.load(fp)
     for hash_i in hash_str:
         browser.execute_script("window.open('');")
         browser.switch_to.window(browser.window_handles[1])
@@ -147,7 +161,7 @@ def put_likes(browser, target_of_likes):
                 like_result = like_it(browser)
                 liked += like_result
                 if like_result == 1:
-                    add_like(browser, hash_i, username_str)
+                    add_like(browser, hash_i, arg_user)
                     x = int(bar_size * liked / target_of_likes)
                     sys.stdout.write('\r' + "-> [" + "#" * x + "." * (bar_size - x) + "] " + hash_i + " "
                                      + str(liked) + "/" + str(target_of_likes))
