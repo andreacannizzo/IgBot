@@ -29,7 +29,7 @@ Please make sure to update tests as appropriate.
 
 ## Authors
 
-- [@occhiodelloshinigami](https://www.github.com/occhiodelloshinigami) a.k.a. Andrea C.
+- [@andreacannizzo](https://www.github.com/andreacannizzo) a.k.a. Andrea C.
 
 ## License
 
