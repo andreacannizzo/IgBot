@@ -13,7 +13,6 @@ Clients_Files
 .DS_Store
 inputs.py
 __pycache__/
-test_all.py
 
 # User-specific stuff
 .idea/**/workspace.xml

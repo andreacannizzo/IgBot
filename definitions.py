@@ -74,12 +74,17 @@ def SAVE_cookies(browser, username_str, password_str):
 
 def SAVE_hashtags(user, hashtags_list):
     if os.path.exists("Clients_Files/" + user):
-        path = "Clients_Files/" + user + "/input_files"
+        path = "Clients_Files/" + user + "/input_files.txt"
     else:
         os.makedirs("Clients_Files/" + user)
-        path = "Clients_Files/" + user + "/input_files"
-    with open(path, 'wb') as fp:
-        pickle.dump(hashtags_list, fp)
+        path = "Clients_Files/" + user + "/input_files.txt"
+    list_element = []
+    for item in hashtags_list:
+        item += '\n'
+        list_element.append(item)
+    file = open(path, 'w')
+    file.writelines(list_element)
+    file.close()
 
 
 def load_cookie(browser, username_str):
@@ -132,10 +137,15 @@ def put_likes(browser, arg_user, target_of_likes):
     max_tryings = 5
     max_skip = 10
     bar_size = 50
-    # read hashtags from input_files
-    path = "Clients_Files/" + arg_user + "/input_files"
-    with open(path, "rb") as fp:
-        hash_str = pickle.load(fp)
+    # read hashtags from input_files.txt
+    path = "Clients_Files/" + arg_user + "/input_files.txt"
+    file = open(path, 'r')
+    content = file.readlines()
+    hash_str = []
+    for line in content:
+        hash_str.append(line.strip())
+    file.close()
+
     for hash_i in hash_str:
         browser.execute_script("window.open('');")
         browser.switch_to.window(browser.window_handles[1])
