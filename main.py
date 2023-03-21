@@ -47,9 +47,9 @@ def options(argv):
             if inp == "":
                 break
             inputs_hashtags.append(inp)
+        input("Press Enter when access authenticated...")
         SAVE_cookies(browser, arg_user, input_password)
         SAVE_hashtags(arg_user, inputs_hashtags)
-        input("Press Enter when access authenticated...")
 
     avoid_popup(browser, "Not Now")
     put_likes(browser, arg_user, arg_likes)
