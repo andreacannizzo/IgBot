@@ -205,7 +205,7 @@ def next(browser):
 def account_handle(browser):
     # _acao _acat _acaw
     handle_handle = WebDriverWait(browser, 1).until(
-        EC.visibility_of_all_elements_located((By.XPATH, "//*[@class='_aacl _aaco _aacw _aacx _aad6 _aade']")))
+        EC.visibility_of_all_elements_located((By.XPATH, "//*[@class='xt0psk2']")))
 
     return handle_handle[0].text
 
