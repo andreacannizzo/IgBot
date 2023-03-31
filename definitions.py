@@ -69,6 +69,7 @@ def SAVE_cookies(browser, username_str, password_str):
     time.sleep(5)
     avoid_popup(browser, "Save Info")
     time.sleep(3)
+    input("Press Enter when access authenticated...")
     save_cookie(browser, username_str)
 
 
