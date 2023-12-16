@@ -6,6 +6,7 @@ os.environ["DISPLAY"] = ":0"
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from datetime import datetime
@@ -18,15 +19,14 @@ import pickle
 
 def launch_browser(path_to_chromedriver, images=True, headless=True):
     chrome_options = webdriver.ChromeOptions()
-    if images:
-        chrome_options.add_experimental_option("prefs", {"intl.accept_languages": 'en,en_US'})
-    else:
-        chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2,
-                                                         'intl.accept_languages': 'en,en_US'})
-    if headless:
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("window-size=1000,700")
-    browser = webdriver.Chrome(path_to_chromedriver, options=chrome_options)
+    service = Service(executable_path=path_to_chromedriver)
+    chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
+    # if not images:
+    #     chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+    # if headless:
+    #     chrome_options.add_argument("--headless")
+    #     chrome_options.add_argument("window-size=1000,700")
+    browser = webdriver.Chrome(service=service, options=chrome_options)
     return browser
 
 
@@ -63,7 +63,7 @@ def save_cookie(browser, username_str):
 
 def SAVE_cookies(browser, username_str, password_str):
     browser.get('https://www.instagram.com/')
-    avoid_popup(browser, "Allow essential and optional cookies")
+    avoid_popup(browser, "Allow all cookies")
     time.sleep(5)
     login(browser, username_str, password_str)
     time.sleep(5)
@@ -120,7 +120,7 @@ def like_it(browser):
         like = WebDriverWait(browser, 5).until(
             EC.visibility_of_element_located((By.CLASS_NAME, "_aamw")))
         color = like.get_property("innerHTML")
-        if "rgb(142, 142, 142)" in color:
+        if "Like" in color:
             time.sleep(random.uniform(2, 4))
             like.click()
             time.sleep(random.uniform(2, 4))
