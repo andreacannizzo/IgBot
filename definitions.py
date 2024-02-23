@@ -23,9 +23,9 @@ def launch_browser(path_to_chromedriver, images=True, headless=True):
     chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
     # if not images:
     #     chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-    # if headless:
-    #     chrome_options.add_argument("--headless")
-    #     chrome_options.add_argument("window-size=1000,700")
+    if headless:
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("window-size=1000,700")
     browser = webdriver.Chrome(service=service, options=chrome_options)
     return browser
 
